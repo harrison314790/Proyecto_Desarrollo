@@ -5,6 +5,15 @@
 package libreria.municipal;
 
 import javax.swing.ImageIcon;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.swing.JOptionPane;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 
 /**
  *
@@ -36,11 +45,12 @@ public class Registrar extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         Tfdusuario = new javax.swing.JTextField();
         Tfdcorreo = new javax.swing.JTextField();
-        Tfdcontraseña = new javax.swing.JTextField();
-        TfdConfirContraseña = new javax.swing.JTextField();
         BtnRegistrar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        Tfdcontraseña = new javax.swing.JPasswordField();
+        TfdConfirContraseña = new javax.swing.JPasswordField();
+        BtnVolver = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -49,6 +59,7 @@ public class Registrar extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(920, 620));
         setResizable(false);
 
+        jPanel1.setToolTipText("");
         jPanel1.setMinimumSize(new java.awt.Dimension(920, 620));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -61,28 +72,22 @@ public class Registrar extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(107, 117, 131));
-        jLabel3.setText("correo*");
+        jLabel3.setText("Correo*");
         jLabel3.setToolTipText("En este caso su usuario sera su correo electronico");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(107, 117, 131));
-        jLabel4.setText("contraseña*");
+        jLabel4.setText("Contraseña*");
         jLabel4.setToolTipText("En este caso su usuario sera su correo electronico");
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(107, 117, 131));
-        jLabel5.setText("confirme contraseña*");
+        jLabel5.setText("Confirme contraseña*");
         jLabel5.setToolTipText("En este caso su usuario sera su correo electronico");
 
         Tfdusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TfdusuarioActionPerformed(evt);
-            }
-        });
-
-        TfdConfirContraseña.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TfdConfirContraseñaActionPerformed(evt);
             }
         });
 
@@ -92,6 +97,9 @@ public class Registrar extends javax.swing.JFrame {
         BtnRegistrar.setContentAreaFilled(false);
         BtnRegistrar.setPreferredSize(new java.awt.Dimension(136, 68));
         BtnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnRegistrarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BtnRegistrarMouseEntered(evt);
             }
@@ -113,32 +121,50 @@ public class Registrar extends javax.swing.JFrame {
         jLabel7.setText("Los campos marcados con * son obligatorios");
         jLabel7.setToolTipText("");
 
+        BtnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_volver.png"))); // NOI18N
+        BtnVolver.setBorderPainted(false);
+        BtnVolver.setContentAreaFilled(false);
+        BtnVolver.setPreferredSize(new java.awt.Dimension(136, 68));
+        BtnVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnVolverMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnVolverMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnVolverMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(79, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(110, 110, 110))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addGap(110, 110, 110))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Tfdusuario)
+                                .addComponent(jLabel2)
+                                .addComponent(Tfdusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
                                 .addComponent(Tfdcorreo)
-                                .addComponent(Tfdcontraseña)
-                                .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel4)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(62, 62, 62))))
+                                    .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29))
+                                .addComponent(jLabel7)
+                                .addComponent(Tfdcontraseña))
+                            .addGap(62, 62, 62)))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,14 +183,16 @@ public class Registrar extends javax.swing.JFrame {
                 .addComponent(Tfdcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Tfdcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Tfdcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(BtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
                 .addGap(18, 18, 18))
         );
 
@@ -234,10 +262,6 @@ public class Registrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnRegistrarActionPerformed
 
-    private void TfdConfirContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdConfirContraseñaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TfdConfirContraseñaActionPerformed
-
     private void TfdusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdusuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TfdusuarioActionPerformed
@@ -254,6 +278,109 @@ public class Registrar extends javax.swing.JFrame {
         BtnRegistrar.setIcon(estadoUnoRe);
     }//GEN-LAST:event_BtnRegistrarMouseExited
 
+    private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
+        // TODO add your handling code here:
+        
+        if (Tfdusuario.getText().isEmpty() || Tfdcorreo.getText().isEmpty() || Tfdcontraseña.getText().isEmpty() || TfdConfirContraseña.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
+        Tfdusuario.setText("");
+        Tfdcorreo.setText("");
+        Tfdcontraseña.setText("");
+        TfdConfirContraseña.setText("");
+        Tfdusuario.requestFocus();
+        return; // Salir del método si algún campo está vacío
+        }
+        
+        
+        if(Tfdusuario.getText().equals("harrison")) {
+            JOptionPane.showMessageDialog(null, "¡El usuario que proporcionaste ya se encuentra registrado!");
+            Tfdusuario.setText("");
+            Tfdusuario.requestFocus();
+        } else if(Tfdcorreo.getText().equals("harrison@gmail.com")) {
+            JOptionPane.showMessageDialog(null, "¡El correo que proporcionaste ya se encuentra registrado!");
+            Tfdcorreo.setText("");
+            Tfdcorreo.requestFocus();
+        } else if(Tfdcontraseña.getText().equals(TfdConfirContraseña.getText())) {
+            enviarCorreoDeConfirmacion(Tfdcorreo.getText());
+            Tfdusuario.setText("");
+            Tfdcorreo.setText("");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+            Tfdusuario.requestFocus();
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "¡La contraseña que proporcionaste no son iguales!");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+            Tfdcontraseña.requestFocus();
+        }
+        
+    }//GEN-LAST:event_BtnRegistrarMouseClicked
+
+    private void BtnVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDos = new ImageIcon("src\\libreria\\municipal\\btn_volver_pressed.png");
+        BtnVolver.setIcon(estatoDos);
+    }//GEN-LAST:event_BtnVolverMouseEntered
+
+    private void BtnVolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoUno = new ImageIcon("src\\libreria\\municipal\\btn_volver.png");
+        BtnVolver.setIcon(estatoUno);
+    }//GEN-LAST:event_BtnVolverMouseExited
+
+    private void BtnVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnVolverMouseClicked
+        // TODO add your handling code here:
+        Login secScreen = new Login();
+        secScreen.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnVolverMouseClicked
+
+    private void enviarCorreoDeConfirmacion(String destinatario) {
+        final String remitente = "harrison31479@gmail.com"; // Cambia esto a tu correo
+        final String password = "yqnt vwsx vxgt tgcq"; // Cambia esto a tu contraseña
+
+        // Configuración del servidor de correo
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.gmail.com");
+        propiedades.put("mail.smtp.port", "587");
+        propiedades.put("mail.smtp.auth", "true");
+        propiedades.put("mail.smtp.starttls.enable", "true");
+
+        // Crear una sesión de correo
+        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(remitente, password);
+            }
+        });
+
+        try {
+            // Crear el mensaje
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(remitente));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject("¡Bienvenido a nuestra biblioteca!");
+
+            // Mensaje de bienvenida personalizado
+            String mensajeBienvenida = "¡Hola!\n\n";
+            mensajeBienvenida += "Te damos la más cordial bienvenida a nuestra biblioteca. Nos alegra que hayas decidido registrarte como cliente.\n";
+            mensajeBienvenida += "A partir de ahora, podrás realizar pedidos de libros y disfrutar de todos nuestros servicios.\n\n";
+            mensajeBienvenida += "¡Esperamos que tu experiencia con nosotros sea excelente!\n\n";
+            mensajeBienvenida += "Atentamente,\n";
+            mensajeBienvenida += "El equipo de la Biblioteca Municipal";
+
+            message.setText(mensajeBienvenida);
+
+            // Enviar el mensaje
+            Transport.send(message);
+
+            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+        } catch (MessagingException e) {
+            JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
+            throw new RuntimeException(e);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -292,8 +419,9 @@ public class Registrar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnRegistrar;
-    private javax.swing.JTextField TfdConfirContraseña;
-    private javax.swing.JTextField Tfdcontraseña;
+    private javax.swing.JButton BtnVolver;
+    private javax.swing.JPasswordField TfdConfirContraseña;
+    private javax.swing.JPasswordField Tfdcontraseña;
     private javax.swing.JTextField Tfdcorreo;
     private javax.swing.JTextField Tfdusuario;
     private javax.swing.JLabel jLabel1;
