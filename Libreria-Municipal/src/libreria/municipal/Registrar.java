@@ -4,6 +4,8 @@
  */
 package libreria.municipal;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author USUARIO
@@ -126,12 +128,17 @@ public class Registrar extends javax.swing.JFrame {
             }
         });
 
-        BtnRegistrar.setText("registrar");
+        BtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_registrar.png"))); // NOI18N
         BtnRegistrar.setToolTipText("");
+        BtnRegistrar.setBorderPainted(false);
+        BtnRegistrar.setContentAreaFilled(false);
         BtnRegistrar.setPreferredSize(new java.awt.Dimension(136, 68));
         BtnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnRegistrarMouseClicked(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BtnRegistrarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BtnRegistrarMouseExited(evt);
             }
         });
         BtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +177,7 @@ public class Registrar extends javax.swing.JFrame {
                                 .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
                             .addContainerGap()))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(152, 152, 152))))
         );
         jPanel4Layout.setVerticalGroup(
@@ -197,7 +204,7 @@ public class Registrar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -277,16 +284,21 @@ public class Registrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TfdConfirContraseñaActionPerformed
 
-    private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
-        // TODO add your handling code here
-        Registrar secScreen = new Registrar();
-        secScreen.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnRegistrarMouseClicked
-
     private void BtnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnRegistrarActionPerformed
+
+    private void BtnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_registrar_pressed.png");
+        BtnRegistrar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_BtnRegistrarMouseEntered
+
+    private void BtnRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_registrar.png");
+        BtnRegistrar.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_BtnRegistrarMouseExited
 
     /**
      * @param args the command line arguments
