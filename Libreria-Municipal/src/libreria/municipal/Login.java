@@ -119,7 +119,7 @@ public class Login extends javax.swing.JFrame {
         BtnRegistrar.setContentAreaFilled(false);
         BtnRegistrar.setMaximumSize(new java.awt.Dimension(136, 68));
         BtnRegistrar.setMinimumSize(new java.awt.Dimension(136, 68));
-        BtnRegistrar.setPreferredSize(new java.awt.Dimension(136, 68));
+        BtnRegistrar.setPreferredSize(new java.awt.Dimension(108, 50));
         BtnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnRegistrarMouseClicked(evt);
