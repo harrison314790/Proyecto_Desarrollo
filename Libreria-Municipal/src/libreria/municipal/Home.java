@@ -26,52 +26,127 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelSuperior = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel();
+        panelLateral = new javax.swing.JPanel();
+        panelLateralAdmin = new javax.swing.JPanel();
+        btnUsuarios = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtSeparador1 = new javax.swing.JLabel();
+        txtSeparador2 = new javax.swing.JLabel();
+        btnLibros = new javax.swing.JButton();
+        panelLateralCliente = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(239, 41, 51));
+        panelSuperior.setBackground(new java.awt.Color(239, 41, 51));
 
         txtTitulo.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtTitulo.setText("LIBRERIA MUNICIPAL");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(txtTitulo)
-                .addContainerGap(381, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelSuperiorLayout = new javax.swing.GroupLayout(panelSuperior);
+        panelSuperior.setLayout(panelSuperiorLayout);
+        panelSuperiorLayout.setHorizontalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
+                .addGap(201, 201, 201)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(199, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelSuperiorLayout.setVerticalGroup(
+            panelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelSuperiorLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(txtTitulo)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, -1));
+        getContentPane().add(panelSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, -1));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setLayout(new java.awt.CardLayout());
+        getContentPane().add(panelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 720, 530));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
+        panelLateral.setLayout(new java.awt.CardLayout());
+
+        panelLateralAdmin.setBackground(new java.awt.Color(244, 244, 244));
+
+        btnUsuarios.setBackground(new java.awt.Color(244, 244, 244));
+        btnUsuarios.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(107, 117, 131));
+        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setBorder(null);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(107, 117, 131));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Menu");
+
+        txtSeparador1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        txtSeparador1.setForeground(new java.awt.Color(107, 117, 131));
+        txtSeparador1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSeparador1.setText("---------------------");
+
+        txtSeparador2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        txtSeparador2.setForeground(new java.awt.Color(107, 117, 131));
+        txtSeparador2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSeparador2.setText("---------------------");
+
+        btnLibros.setBackground(new java.awt.Color(244, 244, 244));
+        btnLibros.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        btnLibros.setForeground(new java.awt.Color(107, 117, 131));
+        btnLibros.setText("Libros");
+        btnLibros.setBorder(null);
+
+        javax.swing.GroupLayout panelLateralAdminLayout = new javax.swing.GroupLayout(panelLateralAdmin);
+        panelLateralAdmin.setLayout(panelLateralAdminLayout);
+        panelLateralAdminLayout.setHorizontalGroup(
+            panelLateralAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLateralAdminLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelLateralAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                    .addComponent(txtSeparador1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtSeparador2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLibros, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelLateralAdminLayout.setVerticalGroup(
+            panelLateralAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLateralAdminLayout.createSequentialGroup()
+                .addComponent(txtSeparador1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSeparador2, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47)
+                .addComponent(btnLibros, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(271, Short.MAX_VALUE))
+        );
+
+        panelLateral.add(panelLateralAdmin, "card2");
+
+        javax.swing.GroupLayout panelLateralClienteLayout = new javax.swing.GroupLayout(panelLateralCliente);
+        panelLateralCliente.setLayout(panelLateralClienteLayout);
+        panelLateralClienteLayout.setHorizontalGroup(
+            panelLateralClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        panelLateralClienteLayout.setVerticalGroup(
+            panelLateralClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 530, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 930, 530));
+        panelLateral.add(panelLateralCliente, "card3");
+
+        getContentPane().add(panelLateral, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 200, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -112,8 +187,16 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton btnLibros;
+    private javax.swing.JButton btnUsuarios;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel panelLateral;
+    private javax.swing.JPanel panelLateralAdmin;
+    private javax.swing.JPanel panelLateralCliente;
+    private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JPanel panelSuperior;
+    private javax.swing.JLabel txtSeparador1;
+    private javax.swing.JLabel txtSeparador2;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
