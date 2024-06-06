@@ -51,6 +51,7 @@ public class Home extends javax.swing.JFrame {
         JbSolicitar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         JtaMostrarSolicitudes = new javax.swing.JTable();
+        JbDevolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -129,13 +130,25 @@ public class Home extends javax.swing.JFrame {
 
         JtaMostrarSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+
             },
             new String [] {
                 "código ", "Título"
             }
         ));
         jScrollPane3.setViewportView(JtaMostrarSolicitudes);
+
+        JbDevolver.setText("Devolver");
+        JbDevolver.setBorderPainted(false);
+        JbDevolver.setContentAreaFilled(false);
+        JbDevolver.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbDevolver.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbDevolver.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbDevolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbDevolverMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -150,7 +163,8 @@ public class Home extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -167,12 +181,14 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(71, 71, 71)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(125, 125, 125))
+                .addGap(47, 47, 47)
+                .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(134, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -210,13 +226,13 @@ public class Home extends javax.swing.JFrame {
     private void JbSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseClicked
         // TODO add your handling code here:
         solicitarPrestamo();
-        modeloSolicitudes = new DefaultTableModel(
-        new Object [][] {},
-        new String [] { "Código", "Título" }
-        );
-        JtaMostrarSolicitudes.setModel(modeloSolicitudes);
         mostrarLibrosSolicitados();
     }//GEN-LAST:event_JbSolicitarMouseClicked
+
+    private void JbDevolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseClicked
+        // TODO add your handling code here:
+        devolverLibro();
+    }//GEN-LAST:event_JbDevolverMouseClicked
 
     /**
      * @param args the command line arguments
@@ -255,6 +271,7 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbBuscar;
+    private javax.swing.JButton JbDevolver;
     private javax.swing.JButton JbSolicitar;
     private javax.swing.JComboBox<String> JcbCategoria;
     private javax.swing.JTable JtaMostrarSolicitudes;
@@ -308,8 +325,8 @@ public class Home extends javax.swing.JFrame {
         int codigoLibro = (int) jTable1.getValueAt(selectedRow, 0);
         String estadoLibro = (String) jTable1.getValueAt(selectedRow, 2);
 
-        if ("Prestado".equalsIgnoreCase(estadoLibro)) {
-            JOptionPane.showMessageDialog(this, "El libro seleccionado ya está prestado", "Error", JOptionPane.ERROR_MESSAGE);
+        if ("Prestado".equalsIgnoreCase(estadoLibro) || "Pendiente".equalsIgnoreCase(estadoLibro)) {
+            JOptionPane.showMessageDialog(this, "El libro seleccionado ya está prestado o en espera de aprobación", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -320,8 +337,11 @@ public class Home extends javax.swing.JFrame {
 
     
     private void mostrarLibrosSolicitados() {
-        // Limpiar el modelo actual
-        modeloSolicitudes.setRowCount(0);
+        modeloSolicitudes = new DefaultTableModel(
+            new Object [][] {},
+            new String [] { "Código", "Título" }
+        );
+        JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
         List<Prestamo> prestamos = catalogo.getPrestamos();
         for (Prestamo prestamo : prestamos) {
@@ -341,4 +361,43 @@ public class Home extends javax.swing.JFrame {
         }
         return "Título no encontrado";
     }
+    
+    private void devolverLibro() {
+        if (usuarioLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Debe estar logueado para devolver un libro", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int selectedRow = JtaMostrarSolicitudes.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un libro para devolver", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int codigoLibro = (int) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
+
+        // Actualizar el estado del libro a "Disponible"
+        for (Libro libro : catalogo.getLibros()) {
+            if (libro.getCodigo() == codigoLibro) {
+                libro.setEstado("Disponible");
+                break;
+            }
+        }
+
+        // Eliminar el préstamo de la lista
+        List<Prestamo> prestamos = catalogo.getPrestamos();
+        for (int i = 0; i < prestamos.size(); i++) {
+            if (prestamos.get(i).getCodigoLibro() == codigoLibro && prestamos.get(i).getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
+                prestamos.remove(i);
+                break;
+            }
+        }
+
+        JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+        // Actualizar las tablas
+        llenarTabla(catalogo.getLibros());
+        mostrarLibrosSolicitados();
+    }
+        
 }

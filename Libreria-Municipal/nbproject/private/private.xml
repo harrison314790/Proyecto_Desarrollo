@@ -5,8 +5,14 @@
         <group>
             <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Libro.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Catalogo.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Usuario.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Registrar.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Home.java</file>
             <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Login.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/AdminC.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/Prestamo.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/ListaPrestamos.java</file>
+            <file>file:/C:/Users/HP/Documents/GitHub/Proyecto_Desarrollo/Libreria-Municipal/src/libreria/municipal/CConexion.java</file>
         </group>
     </open-files>
 </project-private>

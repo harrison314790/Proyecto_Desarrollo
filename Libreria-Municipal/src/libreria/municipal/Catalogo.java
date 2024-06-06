@@ -61,16 +61,14 @@ public class Catalogo {
         }
         return categorias;
     }
-    public void solicitarPrestamo(Usuario usuario, int codigoLibro) {
+        public void solicitarPrestamo(Usuario usuario, int codigoLibro) {
         for (Libro libro : libros) {
             if (libro.getCodigo() == codigoLibro && libro.getEstado().equalsIgnoreCase("Disponible")) {
-                Prestamo prestamo = new Prestamo(usuario, codigoLibro, new Date(), null, "Prestado");
+                Prestamo prestamo = new Prestamo(usuario, codigoLibro, new Date(), null, "Pendiente");
                 prestamos.add(prestamo);
-                libro.setEstado("Prestado");
+                libro.setEstado("Pendiente");
                 break;
             }
         }
-    }
-
-    
+    }  
 }

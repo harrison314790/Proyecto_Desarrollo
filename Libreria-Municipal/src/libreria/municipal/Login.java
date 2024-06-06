@@ -242,59 +242,43 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistrarMouseExited
 
     private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
-        // TODO add your handling code here:
-        if (campoUsuario.getText().isEmpty()||campoContra.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
-                campoUsuario.setText("");
-                campoContra.setText("");
-                campoUsuario.requestFocus();
-                return; // Salir del método si algún campo está vacío
-            }
-        String usuarioIngresado = campoUsuario.getText();
-        String contraseñaIngresada = campoContra.getText();
+        if (campoUsuario.getText().isEmpty() || campoContra.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
+            campoUsuario.setText("");
+            campoContra.setText("");
+            campoUsuario.requestFocus();
+            return; // Salir del método si algún campo está vacío
+        }
+
+        String nombreIngresado = campoUsuario.getText();
+        String contraseñaIngresada = new String(campoContra.getPassword());
         String tipoUsuario = campoTipo.getSelectedItem().toString();
 
-        // Validar si es un cliente
         if (tipoUsuario.equals("Cliente")) {
-            if (usuarioIngresado.equals("cliente")) {
-                if (contraseñaIngresada.equals("123")) {
-                    JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
-                    Home firsScreen = new Home();
-                    firsScreen.setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "¡Contraseña incorrecta!");
-                    campoContra.setText("");
-                    campoContra.requestFocus();
-                }
+            Usuario usuario = Usuario.validarUsuario(nombreIngresado, contraseñaIngresada);
+            if (usuario != null) {
+                JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
+                Home firstScreen = new Home();
+                firstScreen.setVisible(true);
+                this.dispose();
             } else {
-                JOptionPane.showMessageDialog(null, "¡El usuario no existe!");
-                campoUsuario.setText("");
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+                campoContra.setText("");
+                campoUsuario.requestFocus();
+            }
+        } else if (tipoUsuario.equals("Admin")) {
+            AdminC admin = AdminC.validarAdmin(nombreIngresado, contraseñaIngresada);
+            if (admin != null) {
+                JOptionPane.showMessageDialog(null, "¡Bienvenido Admin!");
+                Admin thirdScreen = new Admin();
+                thirdScreen.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 campoContra.setText("");
                 campoUsuario.requestFocus();
             }
         }
-
-        // Validar si es un administrador
-        if (tipoUsuario.equals("Admin")) {
-            if (usuarioIngresado.equals("admin")) {
-                if (contraseñaIngresada.equals("123")) {
-                    JOptionPane.showMessageDialog(null, "¡Bienvenido Admin!");
-                    Admin thirdScreen = new Admin();
-                    thirdScreen.setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "¡Contraseña incorrecta!");
-                    campoContra.setText("");
-                    campoContra.requestFocus();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "¡El usuario no existe!");
-                campoUsuario.setText("");
-                campoContra.setText("");
-                campoUsuario.requestFocus();
-            }
-        }      
     }//GEN-LAST:event_BtnIngresarMouseClicked
 
         

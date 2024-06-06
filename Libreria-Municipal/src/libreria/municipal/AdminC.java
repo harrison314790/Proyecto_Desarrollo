@@ -4,16 +4,43 @@
  */
 package libreria.municipal;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author USUARIO
  */
 public class AdminC extends Usuario {
+    private static List<AdminC> adminsRegistrados = new ArrayList<>();
+    static {
+        // Añadimos los administradores predeterminados
+        adminsRegistrados.add(new AdminC("admin1", "admin1@correo.com", "123"));
+        adminsRegistrados.add(new AdminC("admin2", "admin2@correo.com", "123"));
+    }
+    
     public AdminC(String nombre, String correo, String contraseña) {
         super(nombre, correo, contraseña);
     }
 
     // Métodos
+     
+    public static AdminC buscarAdminPorNombre(String nombre) {
+        for (AdminC admin : adminsRegistrados) {
+            if (admin.getNombre().equalsIgnoreCase(nombre)) {
+                return admin;
+            }
+        }
+        return null;
+    }
+    
+    public static AdminC validarAdmin(String nombre, String contraseña) {
+        AdminC admin = buscarAdminPorNombre(nombre);
+        if (admin != null && admin.getContraseña().equals(contraseña)) {
+            return admin;
+        }
+        return null;
+    }
     public void gestionarUsuarios() {
         // Implementación
     }

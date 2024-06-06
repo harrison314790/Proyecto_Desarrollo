@@ -333,51 +333,6 @@ public class Registrar extends javax.swing.JFrame {
         secScreen.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnVolverMouseClicked
-
-    private void enviarCorreoDeConfirmacion(String destinatario) {
-        final String remitente = "harrison31479@gmail.com"; // Cambia esto a tu correo
-        final String password = "yqnt vwsx vxgt tgcq"; // Cambia esto a tu contraseña
-
-        // Configuración del servidor de correo
-        Properties propiedades = new Properties();
-        propiedades.put("mail.smtp.host", "smtp.gmail.com");
-        propiedades.put("mail.smtp.port", "587");
-        propiedades.put("mail.smtp.auth", "true");
-        propiedades.put("mail.smtp.starttls.enable", "true");
-
-        // Crear una sesión de correo
-        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(remitente, password);
-            }
-        });
-
-        try {
-            // Crear el mensaje
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(remitente));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-            message.setSubject("¡Bienvenido a nuestra biblioteca!");
-
-            // Mensaje de bienvenida personalizado
-            String mensajeBienvenida = "¡Hola!\n\n";
-            mensajeBienvenida += "Te damos la más cordial bienvenida a nuestra biblioteca. Nos alegra que hayas decidido registrarte como cliente.\n";
-            mensajeBienvenida += "A partir de ahora, podrás realizar pedidos de libros y disfrutar de todos nuestros servicios.\n\n";
-            mensajeBienvenida += "¡Esperamos que tu experiencia con nosotros sea excelente!\n\n";
-            mensajeBienvenida += "Atentamente,\n";
-            mensajeBienvenida += "El equipo de la Biblioteca Municipal";
-
-            message.setText(mensajeBienvenida);
-
-            // Enviar el mensaje
-            Transport.send(message);
-
-            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
-        } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
-            throw new RuntimeException(e);
-        }
-    }
     
     /**
      * @param args the command line arguments
@@ -433,4 +388,49 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
+
+    private void enviarCorreoDeConfirmacion(String destinatario) {
+        final String remitente = "harrison31479@gmail.com"; // Cambia esto a tu correo
+        final String password = "yqnt vwsx vxgt tgcq"; // Cambia esto a tu contraseña
+
+        // Configuración del servidor de correo
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.gmail.com");
+        propiedades.put("mail.smtp.port", "587");
+        propiedades.put("mail.smtp.auth", "true");
+        propiedades.put("mail.smtp.starttls.enable", "true");
+
+        // Crear una sesión de correo
+        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(remitente, password);
+            }
+        });
+
+        try {
+            // Crear el mensaje
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(remitente));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject("¡Bienvenido a nuestra biblioteca!");
+
+            // Mensaje de bienvenida personalizado
+            String mensajeBienvenida = "¡Hola!\n\n";
+            mensajeBienvenida += "Te damos la más cordial bienvenida a nuestra biblioteca. Nos alegra que hayas decidido registrarte como cliente.\n";
+            mensajeBienvenida += "A partir de ahora, podrás realizar pedidos de libros y disfrutar de todos nuestros servicios.\n\n";
+            mensajeBienvenida += "¡Esperamos que tu experiencia con nosotros sea excelente!\n\n";
+            mensajeBienvenida += "Atentamente,\n";
+            mensajeBienvenida += "El equipo de la Biblioteca Municipal";
+
+            message.setText(mensajeBienvenida);
+
+            // Enviar el mensaje
+            Transport.send(message);
+
+            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+        } catch (MessagingException e) {
+            JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
+            throw new RuntimeException(e);
+        }
+    }
 }
