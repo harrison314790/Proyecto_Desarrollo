@@ -1,6 +1,7 @@
 package libreria.municipal;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
 public class Login extends javax.swing.JFrame {
@@ -70,16 +71,14 @@ public class Login extends javax.swing.JFrame {
         BtnIngresar.setContentAreaFilled(false);
         BtnIngresar.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_acceder_pressed.png"))); // NOI18N
         BtnIngresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnIngresarMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BtnIngresarMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnIngresarMouseExited(evt);
-            }
-        });
-        BtnIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnIngresarActionPerformed(evt);
             }
         });
 
@@ -101,17 +100,16 @@ public class Login extends javax.swing.JFrame {
         txtContra.setForeground(new java.awt.Color(107, 117, 131));
         txtContra.setText("Contraseña *");
 
-        campoUsuario.setToolTipText("Ingrese su correo electronico");
+        campoUsuario.setToolTipText("Ingrese su usuario registrado");
 
         txtContra1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         txtContra1.setForeground(new java.awt.Color(107, 117, 131));
         txtContra1.setText("Tipo de usuario *");
 
         campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Cliente" }));
-        campoTipo.setSelectedIndex(-1);
-        campoTipo.setToolTipText("Elije el tipo de usuario a el cual correspondes");
+        campoTipo.setToolTipText("Elije el tipo de usuario que eres");
 
-        campoContra.setToolTipText("ingrese su contraseña");
+        campoContra.setToolTipText("ingrese su contraseña registrada");
 
         BtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_registrar.png"))); // NOI18N
         BtnRegistrar.setToolTipText("");
@@ -208,16 +206,6 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnIngresarActionPerformed
-        CLogin objetoLogin = new CLogin();
-        if(objetoLogin.verificarUsuario(campoUsuario, campoContra, campoTipo)==true){
-            this.dispose();
-            Home objetohome = new Home();
-            objetohome.setVisible(true);
-            objetohome.setLocationRelativeTo(null);
-        }
-    }//GEN-LAST:event_BtnIngresarActionPerformed
-
     private void BtnIngresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseEntered
         // TODO add your handling code here:
         ImageIcon estatoDos = new ImageIcon("src\\libreria\\municipal\\btn_acceder_pressed.png");
@@ -252,6 +240,62 @@ public class Login extends javax.swing.JFrame {
         ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_registrar.png");
         BtnRegistrar.setIcon(estadoUnoRe);
     }//GEN-LAST:event_BtnRegistrarMouseExited
+
+    private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
+        // TODO add your handling code here:
+        if (campoUsuario.getText().isEmpty()||campoContra.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
+                campoUsuario.setText("");
+                campoContra.setText("");
+                campoUsuario.requestFocus();
+                return; // Salir del método si algún campo está vacío
+            }
+        String usuarioIngresado = campoUsuario.getText();
+        String contraseñaIngresada = campoContra.getText();
+        String tipoUsuario = campoTipo.getSelectedItem().toString();
+
+        // Validar si es un cliente
+        if (tipoUsuario.equals("Cliente")) {
+            if (usuarioIngresado.equals("cliente")) {
+                if (contraseñaIngresada.equals("123")) {
+                    JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
+                    Home firsScreen = new Home();
+                    firsScreen.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Contraseña incorrecta!");
+                    campoContra.setText("");
+                    campoContra.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "¡El usuario no existe!");
+                campoUsuario.setText("");
+                campoContra.setText("");
+                campoUsuario.requestFocus();
+            }
+        }
+
+        // Validar si es un administrador
+        if (tipoUsuario.equals("Admin")) {
+            if (usuarioIngresado.equals("admin")) {
+                if (contraseñaIngresada.equals("123")) {
+                    JOptionPane.showMessageDialog(null, "¡Bienvenido Admin!");
+                    Admin thirdScreen = new Admin();
+                    thirdScreen.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "¡Contraseña incorrecta!");
+                    campoContra.setText("");
+                    campoContra.requestFocus();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "¡El usuario no existe!");
+                campoUsuario.setText("");
+                campoContra.setText("");
+                campoUsuario.requestFocus();
+            }
+        }      
+    }//GEN-LAST:event_BtnIngresarMouseClicked
 
         
     public static void main(String args[]) {

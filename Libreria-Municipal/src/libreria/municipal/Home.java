@@ -4,17 +4,31 @@
  */
 package libreria.municipal;
 
+import java.util.List;
+import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author kealm
  */
 public class Home extends javax.swing.JFrame {
-
+    private DefaultTableModel mt;
+    private DefaultTableModel modeloSolicitudes;
+    private Catalogo catalogo;
+    private Usuario usuarioLogueado;
     /**
      * Creates new form Home
      */
     public Home() {
+        catalogo = new Catalogo();
+        usuarioLogueado = new Usuario("NombreUsuario", "correo@ejemplo.com", "contraseña");
         initComponents();
+        llenarCategorias();
+        llenarTabla(catalogo.getLibros());
+        
     }
 
     /**
@@ -29,6 +43,14 @@ public class Home extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        JbBuscar = new javax.swing.JButton();
+        JcbCategoria = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        JbSolicitar = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        JtaMostrarSolicitudes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -44,37 +66,157 @@ public class Home extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(204, 204, 204)
                 .addComponent(txtTitulo)
-                .addContainerGap(381, Short.MAX_VALUE))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(txtTitulo)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        JbBuscar.setText("Buscar");
+        JbBuscar.setBorderPainted(false);
+        JbBuscar.setContentAreaFilled(false);
+        JbBuscar.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbBuscar.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbBuscar.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbBuscarMouseClicked(evt);
+            }
+        });
+
+        JcbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Código", "Título", "Estado", "Categoría", "Autor", "Año de Lanzamiento"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        JbSolicitar.setText("Solicitar");
+        JbSolicitar.setBorderPainted(false);
+        JbSolicitar.setContentAreaFilled(false);
+        JbSolicitar.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbSolicitar.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbSolicitar.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbSolicitar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbSolicitarMouseClicked(evt);
+            }
+        });
+
+        JtaMostrarSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "código ", "Título"
+            }
+        ));
+        jScrollPane3.setViewportView(JtaMostrarSolicitudes);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(122, 122, 122))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(125, 125, 125))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 930, 530));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseClicked
+        // TODO add your handling code here:
+        
+        String categoria = JcbCategoria.getSelectedItem().toString();
+        List<Libro> libros = catalogo.buscarPorCategoria(categoria);
+        llenarTabla(libros);
+    }//GEN-LAST:event_JbBuscarMouseClicked
+
+    private void JbSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseClicked
+        // TODO add your handling code here:
+        solicitarPrestamo();
+        modeloSolicitudes = new DefaultTableModel(
+        new Object [][] {},
+        new String [] { "Código", "Título" }
+        );
+        JtaMostrarSolicitudes.setModel(modeloSolicitudes);
+        mostrarLibrosSolicitados();
+    }//GEN-LAST:event_JbSolicitarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -112,8 +254,91 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JbBuscar;
+    private javax.swing.JButton JbSolicitar;
+    private javax.swing.JComboBox<String> JcbCategoria;
+    private javax.swing.JTable JtaMostrarSolicitudes;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarTabla(List<Libro> libros) {
+        mt = (DefaultTableModel) jTable1.getModel();
+        mt.setRowCount(0); // Limpiar la tabla
+
+        for (Libro libro : libros) {
+            mt.addRow(new Object[]{
+                libro.getCodigo(),
+                libro.getTitulo(),
+                libro.getEstado(),
+                libro.getCategoria(),
+                libro.getAutor(),
+                libro.getAnoLanzamiento()
+            });
+        }
+    }
+
+    private void llenarCategorias() {
+        Set<String> categorias = catalogo.obtenerCategorias();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        model.addElement("Todas"); // Añadir opción "Todas"
+        for (String categoria : categorias) {
+            model.addElement(categoria);
+        }
+        JcbCategoria.setModel(model);
+    }
+    
+    private void solicitarPrestamo() {
+        if (usuarioLogueado == null) {
+            JOptionPane.showMessageDialog(this, "Debe estar logueado para solicitar un préstamo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un libro para solicitar un préstamo", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int codigoLibro = (int) jTable1.getValueAt(selectedRow, 0);
+        String estadoLibro = (String) jTable1.getValueAt(selectedRow, 2);
+
+        if ("Prestado".equalsIgnoreCase(estadoLibro)) {
+            JOptionPane.showMessageDialog(this, "El libro seleccionado ya está prestado", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        catalogo.solicitarPrestamo(usuarioLogueado, codigoLibro);
+        JOptionPane.showMessageDialog(this, "Solicitud de préstamo realizada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        llenarTabla(catalogo.getLibros()); // Actualizar la tabla para reflejar el cambio en el estado del libro
+    }
+
+    
+    private void mostrarLibrosSolicitados() {
+        // Limpiar el modelo actual
+        modeloSolicitudes.setRowCount(0);
+
+        List<Prestamo> prestamos = catalogo.getPrestamos();
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
+                int codigoLibro = prestamo.getCodigoLibro();
+                String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
+                modeloSolicitudes.addRow(new Object[]{codigoLibro, tituloLibro});
+            }
+        }
+    }
+
+    private String obtenerTituloLibroPorCodigo(int codigoLibro) {
+        for (Libro libro : catalogo.getLibros()) {
+            if (libro.getCodigo() == codigoLibro) {
+                return libro.getTitulo();
+            }
+        }
+        return "Título no encontrado";
+    }
 }
