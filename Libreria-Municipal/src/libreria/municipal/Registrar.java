@@ -278,39 +278,56 @@ public class Registrar extends javax.swing.JFrame {
 
     private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
         // TODO add your handling code here:
-        
-        if (Tfdusuario.getText().isEmpty() || Tfdcorreo.getText().isEmpty() || Tfdcontraseña.getText().isEmpty() || TfdConfirContraseña.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
-        Tfdusuario.setText("");
-        Tfdcorreo.setText("");
-        Tfdcontraseña.setText("");
-        TfdConfirContraseña.setText("");
-        Tfdusuario.requestFocus();
-        return; // Salir del método si algún campo está vacío
-        }
-        
-        
-        if(Tfdusuario.getText().equals("harrison")) {
-            JOptionPane.showMessageDialog(null, "¡El usuario que proporcionaste ya se encuentra registrado!");
-            Tfdusuario.setText("");
-            Tfdusuario.requestFocus();
-        } else if(Tfdcorreo.getText().equals("harrison@gmail.com")) {
-            JOptionPane.showMessageDialog(null, "¡El correo que proporcionaste ya se encuentra registrado!");
-            Tfdcorreo.setText("");
-            Tfdcorreo.requestFocus();
-        } else if(Tfdcontraseña.getText().equals(TfdConfirContraseña.getText())) {
-            enviarCorreoDeConfirmacion(Tfdcorreo.getText());
+        String nombre = Tfdusuario.getText().trim();
+        String correo = Tfdcorreo.getText().trim();
+        String contraseña = new String(Tfdcontraseña.getPassword());
+        String confirmarContraseña = new String(TfdConfirContraseña.getPassword());
+
+        if (nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
             Tfdusuario.setText("");
             Tfdcorreo.setText("");
             Tfdcontraseña.setText("");
             TfdConfirContraseña.setText("");
             Tfdusuario.requestFocus();
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "¡La contraseña que proporcionaste no son iguales!");
+            return;
+        }
+
+        if (!contraseña.equals(confirmarContraseña)) {
+            JOptionPane.showMessageDialog(null, "¡Las contraseñas no coinciden!");
             Tfdcontraseña.setText("");
             TfdConfirContraseña.setText("");
             Tfdcontraseña.requestFocus();
+            return;
+        }
+
+        if (Usuario.buscarUsuarioPorNombre(nombre) != null) {
+            JOptionPane.showMessageDialog(null, "¡El nombre de usuario ya está registrado!");
+            Tfdusuario.setText("");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+            Tfdusuario.requestFocus();
+            return;
+        }
+
+        if (Usuario.buscarUsuarioPorCorreo(correo) != null) {
+            JOptionPane.showMessageDialog(null, "¡El correo electrónico ya está registrado!");
+            Tfdcorreo.setText("");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+            Tfdcorreo.requestFocus();
+            return;
+        }
+
+        if (Usuario.registrarUsuario(nombre, correo, contraseña)) {
+            enviarCorreoDeConfirmacion(correo);
+            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+            Tfdusuario.setText("");
+            Tfdcorreo.setText("");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "¡Hubo un problema al registrar el usuario!");
         }
         
     }//GEN-LAST:event_BtnRegistrarMouseClicked

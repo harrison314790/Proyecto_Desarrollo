@@ -15,8 +15,7 @@ public class AdminC extends Usuario {
     private static List<AdminC> adminsRegistrados = new ArrayList<>();
     static {
         // Añadimos los administradores predeterminados
-        adminsRegistrados.add(new AdminC("admin1", "admin1@correo.com", "123"));
-        adminsRegistrados.add(new AdminC("admin2", "admin2@correo.com", "123"));
+        adminsRegistrados.add(new AdminC("admin", "admin1@correo.com", "123"));
     }
     
     public AdminC(String nombre, String correo, String contraseña) {

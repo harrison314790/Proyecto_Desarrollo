@@ -19,7 +19,7 @@ public class Usuario {
     
     static {
         // Añadimos los administradores predeterminados
-        usuariosRegistrados.add(new AdminC("admin", "admin1@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("cliente", "admin1@correo.com", "123"));
     }
 
     public Usuario(String nombre, String correo, String contraseña) {
@@ -41,13 +41,23 @@ public class Usuario {
         return contraseña;
     }
     public static boolean registrarUsuario(String nombre, String correo, String contraseña) {
-        if (buscarUsuarioPorNombre(nombre) != null) {
-            return false; // Usuario ya registrado
+        if (buscarUsuarioPorNombre(nombre) != null || buscarUsuarioPorCorreo(correo) != null) {
+            return false; // Usuario o correo ya registrados
         }
         Usuario nuevoUsuario = new Usuario(nombre, correo, contraseña);
         usuariosRegistrados.add(nuevoUsuario);
         return true;
     }
+    
+    public static Usuario buscarUsuarioPorCorreo(String correo) {
+        for (Usuario usuario : usuariosRegistrados) {
+            if (usuario.getCorreo().equalsIgnoreCase(correo)) {
+                return usuario;
+            }
+        }
+        return null;
+    }
+    
     
     public static Usuario buscarUsuarioPorNombre(String nombre) {
         for (Usuario usuario : usuariosRegistrados) {
