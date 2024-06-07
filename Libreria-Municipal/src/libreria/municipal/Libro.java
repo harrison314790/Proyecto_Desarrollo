@@ -11,14 +11,14 @@ package libreria.municipal;
 public class Libro {
     
     
-    private int codigo;
+    private String codigo;
     private String titulo;
     private String estado;
     private String categoria;
     private String autor;
     private int anoLanzamiento;
 
-    public Libro(int codigo, String titulo, String estado, String categoria, String autor, int anoLanzamiento) {
+    public Libro(String codigo, String titulo, String estado, String categoria, String autor, int anoLanzamiento) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.estado = estado;
@@ -27,7 +27,8 @@ public class Libro {
         this.anoLanzamiento = anoLanzamiento;
     }
 
-    public int getCodigo() {
+
+    public String getCodigo() {
         return codigo;
     }
 

@@ -113,7 +113,15 @@ public class Home extends javax.swing.JFrame {
             new String [] {
                 "Código", "Título", "Estado", "Categoría", "Autor", "Año de Lanzamiento"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         JbSolicitar.setText("Solicitar");
@@ -322,7 +330,7 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        int codigoLibro = (int) jTable1.getValueAt(selectedRow, 0);
+        String codigoLibro = (String) jTable1.getValueAt(selectedRow, 0);
         String estadoLibro = (String) jTable1.getValueAt(selectedRow, 2);
 
         if ("Prestado".equalsIgnoreCase(estadoLibro) || "Pendiente".equalsIgnoreCase(estadoLibro)) {
@@ -346,14 +354,14 @@ public class Home extends javax.swing.JFrame {
         List<Prestamo> prestamos = catalogo.getPrestamos();
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
-                int codigoLibro = prestamo.getCodigoLibro();
+                String codigoLibro = prestamo.getCodigoLibro();
                 String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
                 modeloSolicitudes.addRow(new Object[]{codigoLibro, tituloLibro});
             }
         }
     }
 
-    private String obtenerTituloLibroPorCodigo(int codigoLibro) {
+    private String obtenerTituloLibroPorCodigo(String codigoLibro) {
         for (Libro libro : catalogo.getLibros()) {
             if (libro.getCodigo() == codigoLibro) {
                 return libro.getTitulo();
@@ -374,7 +382,7 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        int codigoLibro = (int) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
+        String codigoLibro = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
 
         // Actualizar el estado del libro a "Disponible"
         for (Libro libro : catalogo.getLibros()) {
