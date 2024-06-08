@@ -4,11 +4,13 @@
  */
 package libreria.municipal;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -133,9 +135,17 @@ public class Home extends javax.swing.JFrame {
 
             },
             new String [] {
-                "código ", "Título"
+                "código ", "Título", "Fecha Préstamo", "Fecha Devolución", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(JtaMostrarSolicitudes);
 
         JbDevolver.setText("Devolver");
@@ -155,23 +165,23 @@ public class Home extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGap(32, 32, 32)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(122, 122, 122))
+                        .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(51, 51, 51)
+                        .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(88, 88, 88))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,15 +190,16 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(JbSolicitar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JbDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -332,23 +343,34 @@ public class Home extends javax.swing.JFrame {
 
         catalogo.solicitarPrestamo(usuarioLogueado, codigoLibro);
         JOptionPane.showMessageDialog(this, "Solicitud de préstamo realizada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        llenarTabla(catalogo.getLibros()); // Actualizar la tabla para reflejar el cambio en el estado del libro
+        llenarTabla(catalogo.getLibros());
+        mostrarLibrosSolicitados();
     }
 
     
     private void mostrarLibrosSolicitados() {
         modeloSolicitudes = new DefaultTableModel(
-            new Object [][] {},
-            new String [] { "Código", "Título" }
-        );
+            new Object[][] {},
+            new String[] { "Código", "Título", "Fecha Préstamo", "Fecha Devolución", "Estado" }
+        ) {
+            boolean[] canEdit = new boolean[] { false, false, false, false, true };
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
+            }
+        };
         JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
         List<Prestamo> prestamos = catalogo.getPrestamos();
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
                 int codigoLibro = prestamo.getCodigoLibro();
+                String estadoLibro = prestamo.getEstado();
                 String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
-                modeloSolicitudes.addRow(new Object[]{codigoLibro, tituloLibro});
+                String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
+                String fechaDevolucion = prestamo.getFechaDevolucion() != null ? prestamo.getFechaDevolucion().toString() : "N/A";
+                modeloSolicitudes.addRow(new Object[] { codigoLibro, tituloLibro, fechaPrestamo, fechaDevolucion, estadoLibro });
             }
         }
     }
@@ -375,27 +397,15 @@ public class Home extends javax.swing.JFrame {
         }
 
         int codigoLibro = (int) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
+        String estadoPrestamo = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 4);
 
-        // Actualizar el estado del libro a "Disponible"
-        for (Libro libro : catalogo.getLibros()) {
-            if (libro.getCodigo() == codigoLibro) {
-                libro.setEstado("Disponible");
-                break;
-            }
+        if (!"Prestado".equalsIgnoreCase(estadoPrestamo)) {
+            JOptionPane.showMessageDialog(this, "El libro seleccionado no está en estado 'Prestado'", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        // Eliminar el préstamo de la lista
-        List<Prestamo> prestamos = catalogo.getPrestamos();
-        for (int i = 0; i < prestamos.size(); i++) {
-            if (prestamos.get(i).getCodigoLibro() == codigoLibro && prestamos.get(i).getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
-                prestamos.remove(i);
-                break;
-            }
-        }
-
+        catalogo.devolverLibro(usuarioLogueado, codigoLibro);
         JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-        // Actualizar las tablas
         llenarTabla(catalogo.getLibros());
         mostrarLibrosSolicitados();
     }

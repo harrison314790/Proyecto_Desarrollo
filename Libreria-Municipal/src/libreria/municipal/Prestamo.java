@@ -4,6 +4,7 @@
  */
 package libreria.municipal;
 
+import java.time.LocalDate;
 import java.util.Date;
 /**
  *
@@ -13,12 +14,12 @@ import java.util.Date;
 public class Prestamo {
     private Usuario usuario;
     private int codigoLibro;
-    private Date fechaPrestamo;
-    private Date fechaDevolucion;
+    private LocalDate fechaPrestamo;
+    private LocalDate fechaDevolucion;
     private String estado;
     
 
-    public Prestamo(Usuario usuario, int codigoLibro, Date fechaPrestamo, Date fechaDevolucion, String estado) {
+    public Prestamo(Usuario usuario, int codigoLibro, LocalDate fechaPrestamo, LocalDate fechaDevolucion, String estado) {
         this.usuario = usuario;
         this.codigoLibro = codigoLibro;
         this.fechaPrestamo = fechaPrestamo;
@@ -27,11 +28,11 @@ public class Prestamo {
     }
     
         // Getters
-    public Date getFechaPrestamo() {
+    public LocalDate getFechaPrestamo() {
         return fechaPrestamo;
     }
 
-    public Date getFechaDevolucion() {
+    public LocalDate getFechaDevolucion() {
         return fechaDevolucion;
     }
 
@@ -53,6 +54,14 @@ public class Prestamo {
     
     public void setCodigoLibro(int codigoLibro) {
         this.codigoLibro = codigoLibro;
+    }
+    
+    public void setFechaDevolucion(LocalDate fechaDevolucion) {
+    this.fechaDevolucion = fechaDevolucion;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     // Métodos

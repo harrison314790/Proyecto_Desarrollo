@@ -4,9 +4,9 @@
  */
 package libreria.municipal;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,21 +54,37 @@ public class Catalogo {
         }
         return resultado;
     }
-        public Set<String> obtenerCategorias() {
+    public Set<String> obtenerCategorias() {
         Set<String> categorias = new HashSet<>();
         for (Libro libro : libros) {
             categorias.add(libro.getCategoria());
         }
         return categorias;
     }
-        public void solicitarPrestamo(Usuario usuario, int codigoLibro) {
+    public void solicitarPrestamo(Usuario usuario, int codigoLibro) {
         for (Libro libro : libros) {
             if (libro.getCodigo() == codigoLibro && libro.getEstado().equalsIgnoreCase("Disponible")) {
-                Prestamo prestamo = new Prestamo(usuario, codigoLibro, new Date(), null, "Pendiente");
+                Prestamo prestamo = new Prestamo(usuario, codigoLibro, null, null, "Pendiente");
                 prestamos.add(prestamo);
                 libro.setEstado("Pendiente");
                 break;
             }
         }
-    }  
+    }
+    public void devolverLibro(Usuario usuario, int codigoLibro) {
+        for (Prestamo prestamo : prestamos) {
+            if (prestamo.getCodigoLibro() == codigoLibro && prestamo.getUsuario().getNombre().equals(usuario.getNombre()) && "Prestado".equalsIgnoreCase(prestamo.getEstado())) {
+                prestamo.setFechaDevolucion(LocalDate.now());
+                prestamo.setEstado("Devuelto");
+                break;
+            }
+        }
+
+        for (Libro libro : libros) {
+            if (libro.getCodigo() == codigoLibro) {
+                libro.setEstado("Disponible");
+                break;
+            }
+        }
+    }
 }
