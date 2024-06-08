@@ -4,26 +4,17 @@
  */
 package libreria.municipal;
 
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-
 /**
  *
  * @author USUARIO
  */
 public class Admin extends javax.swing.JFrame {
-    private Catalogo catalogo;
-    private DefaultTableModel mt;
 
     /**
      * Creates new form Admin
      */
     public Admin() {
-        catalogo = new Catalogo();
         initComponents();
-        mt = (DefaultTableModel) jTable1.getModel();
-        cargarTabla();
     }
 
     /**
@@ -38,18 +29,6 @@ public class Admin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        JbAgregar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        JbElimanar = new javax.swing.JButton();
-        JbActualizar = new javax.swing.JButton();
-        codigoField = new javax.swing.JTextField();
-        tituloField = new javax.swing.JTextField();
-        estadoField = new javax.swing.JTextField();
-        autorField = new javax.swing.JTextField();
-        anioField = new javax.swing.JTextField();
-        categoriaField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(920, 620));
@@ -59,7 +38,7 @@ public class Admin extends javax.swing.JFrame {
 
         txtTitulo.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitulo.setText("LIBRERIA MUNICIPAL");
+        txtTitulo.setText("LIBRERIA adMUNICIPAL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -80,152 +59,33 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        JbAgregar.setText("Agregar");
-        JbAgregar.setBorderPainted(false);
-        JbAgregar.setContentAreaFilled(false);
-        JbAgregar.setMaximumSize(new java.awt.Dimension(108, 50));
-        JbAgregar.setMinimumSize(new java.awt.Dimension(108, 50));
-        JbAgregar.setPreferredSize(new java.awt.Dimension(108, 50));
-        JbAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JbAgregarMouseClicked(evt);
-            }
-        });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Código", "Título", "Estado", "Categoría", "Autor", "Año de Lanzamiento"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        JbElimanar.setText("Eliminar");
-        JbElimanar.setBorderPainted(false);
-        JbElimanar.setContentAreaFilled(false);
-        JbElimanar.setMaximumSize(new java.awt.Dimension(108, 50));
-        JbElimanar.setMinimumSize(new java.awt.Dimension(108, 50));
-        JbElimanar.setPreferredSize(new java.awt.Dimension(108, 50));
-        JbElimanar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JbElimanarMouseClicked(evt);
-            }
-        });
-
-        JbActualizar.setText("Actualizar");
-        JbActualizar.setBorderPainted(false);
-        JbActualizar.setContentAreaFilled(false);
-        JbActualizar.setMaximumSize(new java.awt.Dimension(108, 50));
-        JbActualizar.setMinimumSize(new java.awt.Dimension(108, 50));
-        JbActualizar.setPreferredSize(new java.awt.Dimension(108, 50));
-        JbActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JbActualizarMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(anioField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(autorField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(categoriaField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(estadoField))
-                                .addGap(24, 24, 24))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(JbElimanar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 693, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(codigoField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(tituloField))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(codigoField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tituloField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(estadoField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(categoriaField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(autorField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(anioField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                        .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JbElimanar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(55, 55, 55))
-        );
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 930, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 998, Short.MAX_VALUE)
+            .addGap(0, 986, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 27, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 27, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 635, Short.MAX_VALUE)
+            .addGap(0, 620, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -239,141 +99,6 @@ public class Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbAgregarMouseClicked
-        String titulo = tituloField.getText();
-        String estado = estadoField.getText();
-        String categoria = categoriaField.getText();
-        String autor = autorField.getText();
-        String codigo = codigoField.getText(); // Asumiendo que tienes un campo de texto para el código
-        String anioText = anioField.getText();
-        // Verificar si el año es un número
-        int anio;
-        try {
-            anio = Integer.parseInt(anioText);
-        } catch (NumberFormatException e) {
-            // Mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
-            anioField.setText(""); // Limpiar el campo de texto del año
-            anioField.requestFocus(); // Hacer focus en el campo de texto del año
-            return; // Terminar la ejecución aquí
-        }
-        // Verificar si el código está vacío o si ya existe en el catálogo
-        if (codigo.isEmpty()) {
-            // Generar un código único para el libro (por ejemplo, usando el tamaño del catálogo)
-            codigo = "" + (catalogo.getLibros().size() + 1);
-        } else if (catalogo.existeCodigo(codigo)) {
-            // Mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Se generará un codigo nuevo.");
-            codigo = "" + (catalogo.getLibros().size() + 1);
-        }
-
-        // Crear un nuevo objeto Libro
-        Libro nuevoLibro = new Libro(codigo, titulo, estado, categoria, autor, anio);
-
-        // Agregar el nuevo libro al catálogo
-        catalogo.agregarLibro(nuevoLibro);
-
-        // Limpiar los campos de texto
-        tituloField.setText("");
-        estadoField.setText("");
-        categoriaField.setText("");
-        autorField.setText("");
-        anioField.setText("");
-        codigoField.setText(""); // Limpiar el campo de texto del código
-
-        // Actualizar la tabla
-        cargarTabla();
-    }//GEN-LAST:event_JbAgregarMouseClicked
-
-    private void JbElimanarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbElimanarMouseClicked
-        
-        // TODO add your handling code here:
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow != -1) {
-            // Obtener el código del libro seleccionado
-            String codigo = (String) mt.getValueAt(selectedRow, 0);
-
-            // Eliminar el libro del catálogo
-            catalogo.eliminarLibro(codigo);
-
-            // Mostrar un mensaje de éxito
-            JOptionPane.showMessageDialog(this, "El libro ha sido eliminado exitosamente.");
-
-            // Actualizar la tabla
-            cargarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para eliminar.");
-        }
-
-    }//GEN-LAST:event_JbElimanarMouseClicked
-        
-    private void JbActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbActualizarMouseClicked
-        int selectedRow = jTable1.getSelectedRow();
-        if (selectedRow != -1) {
-            // Obtener los valores de los campos de texto
-            String codigo = codigoField.getText();
-            String titulo = tituloField.getText();
-            String estado = estadoField.getText();
-            String categoria = categoriaField.getText();
-            String autor = autorField.getText();
-            String anioText = anioField.getText();
-
-            // Verificar si el año es un número
-            int anio;
-            try {
-                anio = Integer.parseInt(anioText);
-            } catch (NumberFormatException e) {
-                // Mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
-                anioField.setText(""); // Limpiar el campo de texto del año
-                anioField.requestFocus(); // Hacer focus en el campo de texto del año
-                return; // Terminar la ejecución aquí
-            }
-
-            // Verificar si el código ya existe en el catálogo (y no es el del libro seleccionado)
-            if (catalogo.existeCodigo(codigo) && !codigo.equals((String) mt.getValueAt(selectedRow, 0))) {
-                // Mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
-                codigoField.setText(""); // Limpiar el campo de texto del código
-                codigoField.requestFocus(); // Hacer focus en el campo de texto del código
-                return; // Terminar la ejecución aquí
-            }
-
-            // Actualizar el libro en el catálogo
-            Libro libroActualizado = new Libro(codigo, titulo, estado, categoria, autor, anio);
-            catalogo.actualizarLibro(libroActualizado);
-
-            // Limpiar los campos de texto
-            tituloField.setText("");
-            estadoField.setText("");
-            categoriaField.setText("");
-            autorField.setText("");
-            anioField.setText("");
-            codigoField.setText("");
-
-            // Mostrar un mensaje de éxito
-            JOptionPane.showMessageDialog(this, "El libro ha sido actualizado exitosamente.");
-
-            // Actualizar la tabla
-            cargarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para actualizar.");
-        }
-    }//GEN-LAST:event_JbActualizarMouseClicked
-
-    private void cargarTabla() {
-        // Limpiar la tabla
-        mt.setRowCount(0);
-        
-        // Obtener los libros del catálogo
-        for (Libro libro : catalogo.getLibros()) {
-            // Agregar los libros a la tabla
-            mt.addRow(new Object[]{libro.getCodigo(), libro.getTitulo(), libro.getEstado(), libro.getCategoria(), libro.getAutor(), libro.getAnoLanzamiento()});
-        }
-    }
-
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -410,20 +135,8 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JbActualizar;
-    private javax.swing.JButton JbAgregar;
-    private javax.swing.JButton JbElimanar;
-    private javax.swing.JTextField anioField;
-    private javax.swing.JTextField autorField;
-    private javax.swing.JTextField categoriaField;
-    private javax.swing.JTextField codigoField;
-    private javax.swing.JTextField estadoField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField tituloField;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

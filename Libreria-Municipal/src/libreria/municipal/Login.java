@@ -2,6 +2,7 @@ package libreria.municipal;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 public class Login extends javax.swing.JFrame {
 

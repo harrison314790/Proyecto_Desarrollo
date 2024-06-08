@@ -12,13 +12,13 @@ import java.util.Date;
 
 public class Prestamo {
     private Usuario usuario;
-    private String codigoLibro;
+    private int codigoLibro;
     private Date fechaPrestamo;
     private Date fechaDevolucion;
     private String estado;
     
 
-    public Prestamo(Usuario usuario, String codigoLibro, Date fechaPrestamo, Date fechaDevolucion, String estado) {
+    public Prestamo(Usuario usuario, int codigoLibro, Date fechaPrestamo, Date fechaDevolucion, String estado) {
         this.usuario = usuario;
         this.codigoLibro = codigoLibro;
         this.fechaPrestamo = fechaPrestamo;
@@ -43,7 +43,7 @@ public class Prestamo {
         return usuario;
     }
 
-    public String getCodigoLibro() {
+    public int getCodigoLibro() {
         return codigoLibro;
     }
     
@@ -51,7 +51,7 @@ public class Prestamo {
         this.usuario = usuario;
     }
     
-    public void setCodigoLibro(String codigoLibro) {
+    public void setCodigoLibro(int codigoLibro) {
         this.codigoLibro = codigoLibro;
     }
 
