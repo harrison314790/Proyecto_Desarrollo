@@ -79,17 +79,10 @@ public class Usuario {
         }
         return null;
     }
-
-    public void solicitudPrestamo() {
-        // Implementación
+    
+    public static List<Usuario> getUsuariosRegistrados() {
+        return usuariosRegistrados;
     }
 
-    public void devolverLibro() {
-        // Implementación
-    }
-
-    public void consultarCatalogo() {
-        // Implementación
-    }
 }
 

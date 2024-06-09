@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -18,10 +19,13 @@ public class Catalogo {
     
     private List<Libro> libros;
     private List<Prestamo> prestamos;
+    private List<Usuario> usuariosRegistrados;
 
     public Catalogo() {
         libros = new ArrayList<>();
         prestamos = new ArrayList<>();
+        usuariosRegistrados = Usuario.getUsuariosRegistrados();
+        
         // Añadir libros de ejemplo
         libros.add(new Libro("1", "Libro 1", "Pendiente", "Ficción", "Autor 1", 2020));
         libros.add(new Libro("2", "Libro 2", "Prestado", "No Ficción", "Autor 2", 2018));
@@ -30,20 +34,16 @@ public class Catalogo {
         libros.add(new Libro("5", "Libro 5", "Pendiente", "Historia", "Autor 4", 2019));
         libros.add(new Libro("6", "Libro 6", "Pendiente", "Historia", "Autor 4", 2019));
         libros.add(new Libro("7", "Libro 7", "Disponible", "Historia", "Autor 4", 2019));
-        
-        Usuario usuario1 = new Usuario("Usuario Uno", "usuario1@example.com", "password1");
-        Usuario usuario2 = new Usuario("Usuario Dos", "usuario2@example.com", "password2");
-        Usuario usuario3 = new Usuario("Usuario 3", "usuario2@example.com", "password2");
-        Usuario usuario4 = new Usuario("Usuario 4", "usuario2@example.com", "password2");
-        Usuario usuario5 = new Usuario("Usuario 5", "usuario2@example.com", "password2");
 
         // Inicializar algunos préstamos (puedes agregar más préstamos aquí)
-        prestamos.add(new Prestamo(usuario1, "1", null, null, "Pendiente"));
-        prestamos.add(new Prestamo(usuario2, "2", LocalDate.of(2023, 1, 1), null, "Prestado")) ;
-        prestamos.add(new Prestamo(usuario1, "3", null, null, "Pendiente"));
-        prestamos.add(new Prestamo(usuario3, "4", LocalDate.of(2024, 06, 8), LocalDate.of(2024, 06, 8), "Prestado")) ;
-        prestamos.add(new Prestamo(usuario4, "5", null, null, "Pendiente"));
-        prestamos.add(new Prestamo(usuario5, "6", null, null, "Pendiente"));
+        if (!usuariosRegistrados.isEmpty()) {
+            prestamos.add(new Prestamo(usuariosRegistrados.get(0), "1", null, null, "Pendiente"));
+            prestamos.add(new Prestamo(usuariosRegistrados.get(1), "2", LocalDate.of(2023, 1, 1), null, "Prestado"));
+            prestamos.add(new Prestamo(usuariosRegistrados.get(0), "3", null, null, "Pendiente"));
+            prestamos.add(new Prestamo(usuariosRegistrados.get(2), "4", LocalDate.of(2024, 6, 8), LocalDate.of(2024, 6, 8), "Prestado"));
+            prestamos.add(new Prestamo(usuariosRegistrados.get(3), "5", null, null, "Pendiente"));
+            prestamos.add(new Prestamo(usuariosRegistrados.get(4), "6", null, null, "Pendiente"));
+        }
     }
 
     public List<Libro> getLibros() {
@@ -88,10 +88,14 @@ public class Catalogo {
     }
 
     public void devolverLibro(Usuario usuario, String codigoLibro) {
-        for (Prestamo prestamo : prestamos) {
+        // Usar un iterador para eliminar el préstamo mientras iteramos
+        Iterator<Prestamo> iterator = prestamos.iterator();
+        while (iterator.hasNext()) {
+            Prestamo prestamo = iterator.next();
             if (prestamo.getCodigoLibro().equals(codigoLibro) && prestamo.getUsuario().getNombre().equals(usuario.getNombre()) && "Prestado".equalsIgnoreCase(prestamo.getEstado())) {
                 prestamo.setFechaDevolucion(LocalDate.now());
                 prestamo.setEstado("Devuelto");
+                iterator.remove();  // Eliminar el préstamo de la lista
                 break;
             }
         }
