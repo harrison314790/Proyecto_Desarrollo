@@ -25,11 +25,7 @@ public class ListaPrestamos {
     }
 
     // Métodos
-    public void listarPrestamos() {
-        for (Prestamo prestamo : prestamos) {
-            System.out.println("Título: " + prestamo.getCodigoLibro() + ", Usuario: " + prestamo.getUsuario().getNombre());
-        }
-    }
+    
 
     public void agregarPrestamo(Prestamo prestamo) {
         prestamos.add(prestamo);

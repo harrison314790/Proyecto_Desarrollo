@@ -23,13 +23,27 @@ public class Catalogo {
         libros = new ArrayList<>();
         prestamos = new ArrayList<>();
         // Añadir libros de ejemplo
-        libros.add(new Libro("1", "Libro 1", "Disponible", "Ficción", "Autor 1", 2020));
+        libros.add(new Libro("1", "Libro 1", "Pendiente", "Ficción", "Autor 1", 2020));
         libros.add(new Libro("2", "Libro 2", "Prestado", "No Ficción", "Autor 2", 2018));
-        libros.add(new Libro("3", "Libro 3", "Disponible", "Ciencia", "Autor 3", 2021));
+        libros.add(new Libro("3", "Libro 3", "Pendiente", "Ciencia", "Autor 3", 2021));
         libros.add(new Libro("4", "Libro 4", "Prestado", "Historia", "Autor 4", 2019));
-        libros.add(new Libro("5", "Libro 5", "Disponible", "Historia", "Autor 4", 2019));
-        libros.add(new Libro("6", "Libro 6", "Disponible", "Historia", "Autor 4", 2019));
+        libros.add(new Libro("5", "Libro 5", "Pendiente", "Historia", "Autor 4", 2019));
+        libros.add(new Libro("6", "Libro 6", "Pendiente", "Historia", "Autor 4", 2019));
         libros.add(new Libro("7", "Libro 7", "Disponible", "Historia", "Autor 4", 2019));
+        
+        Usuario usuario1 = new Usuario("Usuario Uno", "usuario1@example.com", "password1");
+        Usuario usuario2 = new Usuario("Usuario Dos", "usuario2@example.com", "password2");
+        Usuario usuario3 = new Usuario("Usuario 3", "usuario2@example.com", "password2");
+        Usuario usuario4 = new Usuario("Usuario 4", "usuario2@example.com", "password2");
+        Usuario usuario5 = new Usuario("Usuario 5", "usuario2@example.com", "password2");
+
+        // Inicializar algunos préstamos (puedes agregar más préstamos aquí)
+        prestamos.add(new Prestamo(usuario1, "1", null, null, "Pendiente"));
+        prestamos.add(new Prestamo(usuario2, "2", LocalDate.of(2023, 1, 1), null, "Prestado")) ;
+        prestamos.add(new Prestamo(usuario1, "3", null, null, "Pendiente"));
+        prestamos.add(new Prestamo(usuario3, "4", LocalDate.of(2024, 06, 8), LocalDate.of(2024, 06, 8), "Prestado")) ;
+        prestamos.add(new Prestamo(usuario4, "5", null, null, "Pendiente"));
+        prestamos.add(new Prestamo(usuario5, "6", null, null, "Pendiente"));
     }
 
     public List<Libro> getLibros() {
@@ -67,7 +81,7 @@ public class Catalogo {
             if (libro.getCodigo().equals(codigoLibro) && libro.getEstado().equalsIgnoreCase("Disponible")) {
                 Prestamo prestamo = new Prestamo(usuario, codigoLibro, null, null, "Pendiente");
                 prestamos.add(prestamo);
-                libro.setEstado("Pendiente");
+                
                 break;
             }
         }

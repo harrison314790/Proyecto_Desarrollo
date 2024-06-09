@@ -4,7 +4,6 @@
  */
 package libreria.municipal;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
@@ -24,10 +23,11 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
-    public Home() {
-        catalogo = new Catalogo();
-        usuarioLogueado = new Usuario("NombreUsuario", "correo@ejemplo.com", "contraseña");
+    public Home(Usuario usuarioLogueado) {
+        this.catalogo = new Catalogo();
+        this.usuarioLogueado = usuarioLogueado;
         initComponents();
+        mostrarLibrosSolicitados();
         llenarCategorias();
         llenarTabla(catalogo.getLibros());
         
@@ -54,6 +54,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         JtaMostrarSolicitudes = new javax.swing.JTable();
         JbDevolver = new javax.swing.JButton();
+        JbVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -160,6 +161,18 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        JbVolver.setText("Volver");
+        JbVolver.setBorderPainted(false);
+        JbVolver.setContentAreaFilled(false);
+        JbVolver.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbVolver.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbVolver.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbVolver.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbVolverMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -171,7 +184,9 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -190,6 +205,8 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
@@ -245,6 +262,13 @@ public class Home extends javax.swing.JFrame {
         devolverLibro();
     }//GEN-LAST:event_JbDevolverMouseClicked
 
+    private void JbVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseClicked
+        // TODO add your handling code here:
+        Login secScreen = new Login();
+        secScreen.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JbVolverMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -275,7 +299,7 @@ public class Home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home().setVisible(true);
+                new Login().setVisible(true);
             }
         });
     }
@@ -284,6 +308,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton JbBuscar;
     private javax.swing.JButton JbDevolver;
     private javax.swing.JButton JbSolicitar;
+    private javax.swing.JButton JbVolver;
     private javax.swing.JComboBox<String> JcbCategoria;
     private javax.swing.JTable JtaMostrarSolicitudes;
     private javax.swing.JPanel jPanel1;

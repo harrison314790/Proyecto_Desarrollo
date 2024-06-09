@@ -258,7 +258,7 @@ public class Login extends javax.swing.JFrame {
             Usuario usuario = Usuario.validarUsuario(nombreIngresado, contraseñaIngresada);
             if (usuario != null) {
                 JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
-                Home firstScreen = new Home();
+                Home firstScreen = new Home(usuario);
                 firstScreen.setVisible(true);
                 this.dispose();
             } else {

@@ -19,7 +19,11 @@ public class Usuario {
     
     static {
         // Añadimos los administradores predeterminados
-        usuariosRegistrados.add(new AdminC("cliente", "admin1@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("cliente", "cliente1@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("kevin", "cliente2@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("carlos", "cliente3@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("stiven", "cliente4@correo.com", "123"));
+        usuariosRegistrados.add(new AdminC("harri", "cliente5@correo.com", "123"));
     }
 
     public Usuario(String nombre, String correo, String contraseña) {
@@ -75,7 +79,6 @@ public class Usuario {
         }
         return null;
     }
-
 
     public void solicitudPrestamo() {
         // Implementación

@@ -63,6 +63,10 @@ public class Prestamo {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+    
+    public void setFechaPrestamo(LocalDate fechaPrestamo) {
+        this.fechaPrestamo = fechaPrestamo;
+    }
 
     // Métodos
     public void registrarPrestamo() {
