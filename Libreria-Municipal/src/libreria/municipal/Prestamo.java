@@ -48,6 +48,10 @@ public class Prestamo {
         return codigoLibro;
     }
     
+    public String getTitulo() {
+        return codigoLibro;
+    }
+    
     public void setNombreUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
