@@ -4,17 +4,23 @@
  */
 package libreria.municipal;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author USUARIO
  */
 public class Admin extends javax.swing.JFrame {
-
+    private Catalogo catalogo;
+    private DefaultTableModel mt;
     /**
      * Creates new form Admin
      */
     public Admin() {
+        catalogo = new Catalogo();
         initComponents();
+        cargarTabla();
     }
 
     /**
@@ -29,6 +35,18 @@ public class Admin extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        JbActualizar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        JbAgregar = new javax.swing.JButton();
+        JbEliminar = new javax.swing.JButton();
+        JtfEstado = new javax.swing.JTextField();
+        JtfAutor = new javax.swing.JTextField();
+        JtfCategoria = new javax.swing.JTextField();
+        JtfAñoLanza = new javax.swing.JTextField();
+        JtfTitulo = new javax.swing.JTextField();
+        JtfCodigo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(920, 620));
@@ -38,7 +56,7 @@ public class Admin extends javax.swing.JFrame {
 
         txtTitulo.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
-        txtTitulo.setText("LIBRERIA adMUNICIPAL");
+        txtTitulo.setText("LIBRERIA MUNICIPAL");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -59,22 +77,141 @@ public class Admin extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        JbActualizar.setText("Actualizar");
+        JbActualizar.setBorderPainted(false);
+        JbActualizar.setContentAreaFilled(false);
+        JbActualizar.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbActualizar.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbActualizar.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbActualizarMouseClicked(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Código", "Título", "Estado", "Categoría", "Autor", "Año de Lanzamiento"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        JbAgregar.setText("Agregar");
+        JbAgregar.setBorderPainted(false);
+        JbAgregar.setContentAreaFilled(false);
+        JbAgregar.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbAgregar.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbAgregar.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbAgregarMouseClicked(evt);
+            }
+        });
+
+        JbEliminar.setText("Eliminar");
+        JbEliminar.setBorderPainted(false);
+        JbEliminar.setContentAreaFilled(false);
+        JbEliminar.setMaximumSize(new java.awt.Dimension(108, 50));
+        JbEliminar.setMinimumSize(new java.awt.Dimension(108, 50));
+        JbEliminar.setPreferredSize(new java.awt.Dimension(108, 50));
+        JbEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbEliminarMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JbActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JtfEstado)
+                    .addComponent(JtfAutor)
+                    .addComponent(JtfAñoLanza, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(JtfCategoria)
+                    .addComponent(JtfTitulo)
+                    .addComponent(JtfCodigo))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(178, 178, 178))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(100, Short.MAX_VALUE))))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(JtfCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JbEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(JtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(JtfEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(JtfCategoria)
+                        .addGap(18, 18, 18)
+                        .addComponent(JtfAutor)
+                        .addGap(18, 18, 18)
+                        .addComponent(JtfAñoLanza)
+                        .addGap(26, 26, 26)
+                        .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(87, 87, 87))))
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 930, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 986, Short.MAX_VALUE)
+            .addGap(0, 1008, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -99,6 +236,148 @@ public class Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void JbActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbActualizarMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Obtener los valores de los campos de texto
+            String codigo = JtfCodigo.getText().isEmpty() ? null : JtfCodigo.getText();
+            String titulo = JtfTitulo.getText().isEmpty() ? null : JtfTitulo.getText();
+            String estado = JtfEstado.getText().isEmpty() ? null : JtfEstado.getText();
+            String categoria = JtfCategoria.getText().isEmpty() ? null : JtfCategoria.getText();
+            String autor = JtfAutor.getText().isEmpty() ? null : JtfAutor.getText();
+            String anioText = JtfAñoLanza.getText().isEmpty() ? null : JtfAñoLanza.getText();
+        
+            if (catalogo.existeCodigo(codigo)) {
+                // Mostrar un mensaje de error
+                JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
+                JtfCodigo.setText(""); // Limpiar el campo de texto del código
+                JtfCodigo.requestFocus(); // Hacer focus en el campo de texto del código
+                return; // Terminar la ejecución aquí
+            }
+
+            // Verificar si el año es un número
+            Integer anio = null;
+            if (anioText != null) {
+                try {
+                    anio = Integer.parseInt(anioText);
+                } catch (NumberFormatException e) {
+                    // Mostrar un mensaje de error
+                    JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
+                    JtfAñoLanza.setText(""); // Limpiar el campo de texto del año
+                    JtfAñoLanza.requestFocus(); // Hacer focus en el campo de texto del año
+                    return; // Terminar la ejecución aquí
+                }
+            }
+
+            // Obtener el código del libro seleccionado
+            String codigoSeleccionado = (String) mt.getValueAt(selectedRow, 0);
+
+            // Actualizar el libro en el catálogo
+            catalogo.actualizarCodigoLibroVacio(codigoSeleccionado, codigo, titulo, estado, categoria, autor, anio);
+
+            // Limpiar los campos de texto
+            JtfTitulo.setText("");
+            JtfEstado.setText("");
+            JtfCategoria.setText("");
+            JtfAutor.setText("");
+            JtfAñoLanza.setText("");
+            JtfCodigo.setText("");
+
+            // Mostrar un mensaje de éxito
+            JOptionPane.showMessageDialog(this, "El libro ha sido actualizado exitosamente.");
+
+            // Actualizar la tabla
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para actualizar.");
+        }
+    }//GEN-LAST:event_JbActualizarMouseClicked
+
+    private void JbEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbEliminarMouseClicked
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            // Obtener el código del libro seleccionado
+            String codigo = (String) mt.getValueAt(selectedRow, 0);
+
+            // Eliminar el libro del catálogo
+            catalogo.eliminarLibro(codigo);
+
+            // Mostrar un mensaje de éxito
+            JOptionPane.showMessageDialog(this, "El libro ha sido eliminado exitosamente.");
+
+            // Actualizar la tabla
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para eliminar.");
+        }
+    }//GEN-LAST:event_JbEliminarMouseClicked
+
+    private void JbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbAgregarMouseClicked
+        // TODO add your handling code here:
+        // Obtener los valores de los campos de texto
+        String titulo = JtfTitulo.getText();
+        String estado = JtfEstado.getText();
+        String categoria = JtfCategoria.getText();
+        String autor = JtfAutor.getText();
+        String anioText = JtfAñoLanza.getText();
+        String codigo = JtfCodigo.getText(); // Asumiendo que tienes un campo de texto para el código
+        
+        int anio;
+            try {
+                anio = Integer.parseInt(anioText);
+            } catch (NumberFormatException e) {
+                // Mostrar un mensaje de error
+                JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
+                JtfAñoLanza.setText(""); // Limpiar el campo de texto del año
+                JtfAñoLanza.requestFocus(); // Hacer focus en el campo de texto del año
+                return; // Terminar la ejecución aquí
+            }
+
+        // Verificar si el código está vacío o si ya existe en el catálogo
+        if (codigo.isEmpty()) {
+            // Generar un código único para el libro (por ejemplo, usando el tamaño del catálogo)
+            codigo = "" + (catalogo.getLibros().size() + 1);
+        } else if (catalogo.existeCodigo(codigo)) {
+            // Mostrar un mensaje de error
+            JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
+            return; // Terminar la ejecución aquí
+        }
+
+        // Crear un nuevo objeto Libro
+        Libro nuevoLibro = new Libro(codigo, titulo, estado, categoria, autor, anio);
+
+        // Agregar el nuevo libro al catálogo
+        catalogo.agregarLibro(nuevoLibro);
+
+        // Limpiar los campos de texto
+        JtfTitulo.setText("");
+        JtfEstado.setText("");
+        JtfCategoria.setText("");
+        JtfAutor.setText("");
+        JtfAñoLanza.setText("");
+        JtfCodigo.setText(""); // Limpiar el campo de texto del código
+
+        // Mostrar un mensaje de éxito
+        JOptionPane.showMessageDialog(this, "El libro ha sido agregado exitosamente.");
+
+        // Actualizar la tabla
+        cargarTabla();
+    }//GEN-LAST:event_JbAgregarMouseClicked
+    
+    
+    private void cargarTabla() {
+        mt = (DefaultTableModel) jTable1.getModel();
+        mt.setRowCount(0);
+        
+        // Obtener los libros del catálogo
+        for (Libro libro : catalogo.getLibros()) {
+            // Agregar los libros a la tabla
+            mt.addRow(new Object[]{libro.getCodigo(), libro.getTitulo(), libro.getEstado(), libro.getCategoria(), libro.getAutor(), libro.getAnoLanzamiento()});
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -135,8 +414,20 @@ public class Admin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JbActualizar;
+    private javax.swing.JButton JbAgregar;
+    private javax.swing.JButton JbEliminar;
+    private javax.swing.JTextField JtfAutor;
+    private javax.swing.JTextField JtfAñoLanza;
+    private javax.swing.JTextField JtfCategoria;
+    private javax.swing.JTextField JtfCodigo;
+    private javax.swing.JTextField JtfEstado;
+    private javax.swing.JTextField JtfTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

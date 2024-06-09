@@ -333,7 +333,7 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        int codigoLibro = (int) jTable1.getValueAt(selectedRow, 0);
+        String codigoLibro = (String) jTable1.getValueAt(selectedRow, 0);
         String estadoLibro = (String) jTable1.getValueAt(selectedRow, 2);
 
         if ("Prestado".equalsIgnoreCase(estadoLibro) || "Pendiente".equalsIgnoreCase(estadoLibro)) {
@@ -365,7 +365,7 @@ public class Home extends javax.swing.JFrame {
         List<Prestamo> prestamos = catalogo.getPrestamos();
         for (Prestamo prestamo : prestamos) {
             if (prestamo.getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
-                int codigoLibro = prestamo.getCodigoLibro();
+                String codigoLibro = prestamo.getCodigoLibro();
                 String estadoLibro = prestamo.getEstado();
                 String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
                 String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
@@ -375,9 +375,9 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
-    private String obtenerTituloLibroPorCodigo(int codigoLibro) {
+    private String obtenerTituloLibroPorCodigo(String codigoLibro) {
         for (Libro libro : catalogo.getLibros()) {
-            if (libro.getCodigo() == codigoLibro) {
+            if (libro.getCodigo().equals(codigoLibro)) {
                 return libro.getTitulo();
             }
         }
@@ -396,7 +396,7 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        int codigoLibro = (int) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
+        String codigoLibro = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
         String estadoPrestamo = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 4);
 
         if (!"Prestado".equalsIgnoreCase(estadoPrestamo)) {

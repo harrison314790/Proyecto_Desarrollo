@@ -10,15 +10,14 @@ package libreria.municipal;
  */
 public class Libro {
     
-    
-    private int codigo;
+    private String codigo;
     private String titulo;
     private String estado;
     private String categoria;
     private String autor;
     private int anoLanzamiento;
 
-    public Libro(int codigo, String titulo, String estado, String categoria, String autor, int anoLanzamiento) {
+    public Libro(String codigo, String titulo, String estado, String categoria, String autor, int anoLanzamiento) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.estado = estado;
@@ -27,7 +26,7 @@ public class Libro {
         this.anoLanzamiento = anoLanzamiento;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
@@ -54,5 +53,24 @@ public class Libro {
     void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
+    void setCodigo(String codigo) {
+        this.codigo = codigo;    
+    }
+
+    void setTitulo(String titulo) {
+        this.titulo = titulo;    
+    }
+
+    void setCategoria(String categoria) {   
+        this.categoria = categoria;    
+    }
+
+    void setAutor(String autor) {
+        this.autor = autor;    
+    }
+
+    void setAnio(int anoLanzamiento) {
+        this.anoLanzamiento = anoLanzamiento;    
+    }
 }
