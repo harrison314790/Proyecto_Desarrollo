@@ -106,7 +106,7 @@ public class Login extends javax.swing.JFrame {
         txtContra1.setForeground(new java.awt.Color(107, 117, 131));
         txtContra1.setText("Tipo de usuario *");
 
-        campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Cliente" }));
+        campoTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cliente", "Admin" }));
         campoTipo.setToolTipText("Elije el tipo de usuario que eres");
 
         campoContra.setToolTipText("ingrese su contraseña registrada");
@@ -127,11 +127,6 @@ public class Login extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 BtnRegistrarMouseExited(evt);
-            }
-        });
-        BtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnRegistrarActionPerformed(evt);
             }
         });
 
@@ -217,10 +212,6 @@ public class Login extends javax.swing.JFrame {
         ImageIcon estatoUno = new ImageIcon("src\\libreria\\municipal\\btn_acceder.png");
         BtnIngresar.setIcon(estatoUno);
     }//GEN-LAST:event_BtnIngresarMouseExited
-
-    private void BtnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegistrarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnRegistrarActionPerformed
 
     private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
         // TODO add your handling code here

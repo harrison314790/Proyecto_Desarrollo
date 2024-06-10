@@ -254,7 +254,6 @@ public class Home extends javax.swing.JFrame {
     private void JbSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseClicked
         // TODO add your handling code here:
         solicitarPrestamo();
-        mostrarLibrosSolicitados();
     }//GEN-LAST:event_JbSolicitarMouseClicked
 
     private void JbDevolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseClicked

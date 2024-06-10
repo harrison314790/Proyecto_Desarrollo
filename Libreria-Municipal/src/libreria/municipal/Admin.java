@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -75,7 +76,7 @@ public class Admin extends javax.swing.JFrame {
         txtTitulo.setForeground(new java.awt.Color(255, 255, 255));
         txtTitulo.setText("LIBRERIA MUNICIPAL");
 
-        JbActualizar.setText("Actualizar");
+        JbActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_actualizar.png"))); // NOI18N
         JbActualizar.setBorderPainted(false);
         JbActualizar.setContentAreaFilled(false);
         JbActualizar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -84,6 +85,12 @@ public class Admin extends javax.swing.JFrame {
         JbActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbActualizarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbActualizarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbActualizarMouseExited(evt);
             }
         });
 
@@ -106,7 +113,7 @@ public class Admin extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        JbAgregar.setText("Agregar");
+        JbAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_agregar.png"))); // NOI18N
         JbAgregar.setBorderPainted(false);
         JbAgregar.setContentAreaFilled(false);
         JbAgregar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -116,9 +123,15 @@ public class Admin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbAgregarMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbAgregarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbAgregarMouseExited(evt);
+            }
         });
 
-        JbEliminar.setText("Eliminar");
+        JbEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_eliminar.png"))); // NOI18N
         JbEliminar.setBorderPainted(false);
         JbEliminar.setContentAreaFilled(false);
         JbEliminar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -127,6 +140,108 @@ public class Admin extends javax.swing.JFrame {
         JbEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbEliminarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbEliminarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbEliminarMouseExited(evt);
+            }
+        });
+
+        JtfEstado.setForeground(new java.awt.Color(153, 153, 153));
+        JtfEstado.setText("Estado");
+        JtfEstado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfEstadoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfEstadoFocusLost(evt);
+            }
+        });
+        JtfEstado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfEstadoMouseClicked(evt);
+            }
+        });
+
+        JtfAutor.setForeground(new java.awt.Color(153, 153, 153));
+        JtfAutor.setText("Autor");
+        JtfAutor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfAutorFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfAutorFocusLost(evt);
+            }
+        });
+        JtfAutor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfAutorMouseClicked(evt);
+            }
+        });
+
+        JtfCategoria.setForeground(new java.awt.Color(153, 153, 153));
+        JtfCategoria.setText("Categoria");
+        JtfCategoria.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfCategoriaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfCategoriaFocusLost(evt);
+            }
+        });
+        JtfCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfCategoriaMouseClicked(evt);
+            }
+        });
+
+        JtfAñoLanza.setForeground(new java.awt.Color(153, 153, 153));
+        JtfAñoLanza.setText("Año Lanzamiento");
+        JtfAñoLanza.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfAñoLanzaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfAñoLanzaFocusLost(evt);
+            }
+        });
+        JtfAñoLanza.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfAñoLanzaMouseClicked(evt);
+            }
+        });
+
+        JtfTitulo.setForeground(new java.awt.Color(153, 153, 153));
+        JtfTitulo.setText("Titulo");
+        JtfTitulo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfTituloFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfTituloFocusLost(evt);
+            }
+        });
+        JtfTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfTituloMouseClicked(evt);
+            }
+        });
+
+        JtfCodigo.setForeground(new java.awt.Color(153, 153, 153));
+        JtfCodigo.setText("Codigo");
+        JtfCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                JtfCodigoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JtfCodigoFocusLost(evt);
+            }
+        });
+        JtfCodigo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JtfCodigoMouseClicked(evt);
             }
         });
 
@@ -148,7 +263,7 @@ public class Admin extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(JtaMostrarSolicitudes);
 
-        JbPrestar.setText("Prestar");
+        JbPrestar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_prestar.png"))); // NOI18N
         JbPrestar.setBorderPainted(false);
         JbPrestar.setContentAreaFilled(false);
         JbPrestar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -158,9 +273,15 @@ public class Admin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbPrestarMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbPrestarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbPrestarMouseExited(evt);
+            }
         });
 
-        JbDevolver1.setText("Devolver");
+        JbDevolver1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_devolver.png"))); // NOI18N
         JbDevolver1.setBorderPainted(false);
         JbDevolver1.setContentAreaFilled(false);
         JbDevolver1.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -170,9 +291,15 @@ public class Admin extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbDevolver1MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbDevolver1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbDevolver1MouseExited(evt);
+            }
         });
 
-        JbVolver.setText("Volver");
+        JbVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_volver.png"))); // NOI18N
         JbVolver.setBorderPainted(false);
         JbVolver.setContentAreaFilled(false);
         JbVolver.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -181,6 +308,12 @@ public class Admin extends javax.swing.JFrame {
         JbVolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbVolverMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbVolverMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbVolverMouseExited(evt);
             }
         });
 
@@ -214,7 +347,7 @@ public class Admin extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JbEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(JtfAñoLanza, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -233,20 +366,18 @@ public class Admin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(JbPrestar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1)
                                 .addGroup(jPanel3Layout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(JcbEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(JtfFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))))))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(JbDevolver1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(JcbEstados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel3Layout.createSequentialGroup()
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(JtfFechaDevolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(JbDevolver1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JbPrestar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(110, 110, 110))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -254,12 +385,12 @@ public class Admin extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addComponent(JbActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(4, 4, 4)
@@ -274,9 +405,7 @@ public class Admin extends javax.swing.JFrame {
                                 .addComponent(JbDevolver1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JcbEstados, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(68, 68, 68)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -292,7 +421,10 @@ public class Admin extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(JtfAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(JtfAñoLanza, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(JtfAñoLanza, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -605,6 +737,205 @@ public class Admin extends javax.swing.JFrame {
         secScreen.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_JbVolverMouseClicked
+
+    private void JtfCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfCodigoFocusGained
+        // TODO add your handling code here:
+        if(JtfCodigo.getText().equals("Codigo")){
+            JtfCodigo.setText("");
+            JtfCodigo.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfCodigoFocusGained
+
+    private void JtfCodigoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfCodigoFocusLost
+        // TODO add your handling code here:
+        if(JtfCodigo.getText().equals("")){
+            JtfCodigo.setText("Codigo");
+            JtfCodigo.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfCodigoFocusLost
+
+    private void JtfCodigoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfCodigoMouseClicked
+        // TODO add your handling code here:
+        JtfCodigo.setForeground(Color.black);
+    }//GEN-LAST:event_JtfCodigoMouseClicked
+
+    private void JtfTituloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfTituloFocusGained
+        // TODO add your handling code here:
+        if(JtfTitulo.getText().equals("Titulo")){
+            JtfTitulo.setText("");
+            JtfTitulo.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfTituloFocusGained
+
+    private void JtfTituloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfTituloFocusLost
+        // TODO add your handling code here:
+        if(JtfTitulo.getText().equals("")){
+            JtfTitulo.setText("Titulo");
+            JtfTitulo.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfTituloFocusLost
+
+    private void JtfTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfTituloMouseClicked
+        // TODO add your handling code here:
+        JtfTitulo.setForeground(Color.black);
+    }//GEN-LAST:event_JtfTituloMouseClicked
+
+    private void JtfEstadoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfEstadoFocusGained
+        // TODO add your handling code here:
+        if(JtfEstado.getText().equals("Estado")){
+            JtfEstado.setText("");
+            JtfEstado.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfEstadoFocusGained
+
+    private void JtfEstadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfEstadoFocusLost
+        // TODO add your handling code here:
+        if(JtfEstado.getText().equals("")){
+            JtfEstado.setText("Estado");
+            JtfEstado.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfEstadoFocusLost
+
+    private void JtfEstadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfEstadoMouseClicked
+        // TODO add your handling code here:
+        JtfEstado.setForeground(Color.black);
+    }//GEN-LAST:event_JtfEstadoMouseClicked
+
+    private void JtfCategoriaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfCategoriaFocusGained
+        // TODO add your handling code here:
+        if(JtfCategoria.getText().equals("Categoria")){
+            JtfCategoria.setText("");
+            JtfCategoria.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfCategoriaFocusGained
+
+    private void JtfCategoriaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfCategoriaFocusLost
+        // TODO add your handling code here:
+        if(JtfCategoria.getText().equals("")){
+            JtfCategoria.setText("Categoria");
+            JtfCategoria.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfCategoriaFocusLost
+
+    private void JtfCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfCategoriaMouseClicked
+        // TODO add your handling code here:
+        JtfCategoria.setForeground(Color.black);
+        
+    }//GEN-LAST:event_JtfCategoriaMouseClicked
+
+    private void JtfAutorFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfAutorFocusGained
+        // TODO add your handling code here:
+        if(JtfAutor.getText().equals("Autor")){
+            JtfAutor.setText("");
+            JtfAutor.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfAutorFocusGained
+
+    private void JtfAutorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfAutorFocusLost
+        // TODO add your handling code here:
+        if(JtfAutor.getText().equals("")){
+            JtfAutor.setText("Autor");
+            JtfAutor.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfAutorFocusLost
+
+    private void JtfAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfAutorMouseClicked
+        // TODO add your handling code here:
+        JtfAutor.setForeground(Color.black);
+    }//GEN-LAST:event_JtfAutorMouseClicked
+
+    private void JtfAñoLanzaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfAñoLanzaFocusGained
+        // TODO add your handling code here:
+        if(JtfAñoLanza.getText().equals("Año Lanzamiento")){
+            JtfAñoLanza.setText("");
+            JtfAñoLanza.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfAñoLanzaFocusGained
+
+    private void JtfAñoLanzaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JtfAñoLanzaFocusLost
+        // TODO add your handling code here:
+        if(JtfAñoLanza.getText().equals("")){
+            JtfAñoLanza.setText("Año Lanzamiento");
+            JtfAñoLanza.setForeground(new Color(153,153,153));
+        }
+    }//GEN-LAST:event_JtfAñoLanzaFocusLost
+
+    private void JtfAñoLanzaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JtfAñoLanzaMouseClicked
+        // TODO add your handling code here:
+        JtfAñoLanza.setForeground(Color.black);
+    }//GEN-LAST:event_JtfAñoLanzaMouseClicked
+
+    private void JbActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbActualizarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_actualizar_pressed.png");
+        JbActualizar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbActualizarMouseEntered
+
+    private void JbActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbActualizarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_actualizar.png");
+        JbActualizar.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_JbActualizarMouseExited
+
+    private void JbAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbAgregarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_agregar_pressed.png");
+        JbAgregar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbAgregarMouseEntered
+
+    private void JbAgregarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbAgregarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_agregar.png");
+        JbAgregar.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_JbAgregarMouseExited
+
+    private void JbEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbEliminarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_eliminar_pressed.png");
+        JbEliminar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbEliminarMouseEntered
+
+    private void JbEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbEliminarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_eliminar.png");
+        JbEliminar.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_JbEliminarMouseExited
+
+    private void JbPrestarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbPrestarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_prestar_pressed.png");
+        JbPrestar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbPrestarMouseEntered
+
+    private void JbPrestarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbPrestarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_prestar.png");
+        JbPrestar.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_JbPrestarMouseExited
+
+    private void JbDevolver1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolver1MouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver_pressed.png");
+        JbDevolver1.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbDevolver1MouseEntered
+
+    private void JbDevolver1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolver1MouseExited
+        // TODO add your handling code here:
+        ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver.png");
+        JbDevolver1.setIcon(estadoUnoRe);
+    }//GEN-LAST:event_JbDevolver1MouseExited
+
+    private void JbVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver_pressed.png");
+        JbVolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbVolverMouseEntered
+
+    private void JbVolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver.png");
+        JbVolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbVolverMouseExited
     
     
     private void cargarTabla() {
