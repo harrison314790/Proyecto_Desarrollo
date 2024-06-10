@@ -7,6 +7,7 @@ package libreria.municipal;
 import java.util.List;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -86,7 +87,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        JbBuscar.setText("Buscar");
+        JbBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_buscar.png"))); // NOI18N
         JbBuscar.setBorderPainted(false);
         JbBuscar.setContentAreaFilled(false);
         JbBuscar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -95,6 +96,12 @@ public class Home extends javax.swing.JFrame {
         JbBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbBuscarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbBuscarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbBuscarMouseExited(evt);
             }
         });
 
@@ -119,7 +126,7 @@ public class Home extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        JbSolicitar.setText("Solicitar");
+        JbSolicitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_solicitar.png"))); // NOI18N
         JbSolicitar.setBorderPainted(false);
         JbSolicitar.setContentAreaFilled(false);
         JbSolicitar.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -128,6 +135,12 @@ public class Home extends javax.swing.JFrame {
         JbSolicitar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbSolicitarMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbSolicitarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbSolicitarMouseExited(evt);
             }
         });
 
@@ -149,7 +162,7 @@ public class Home extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(JtaMostrarSolicitudes);
 
-        JbDevolver.setText("Devolver");
+        JbDevolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_devolver.png"))); // NOI18N
         JbDevolver.setBorderPainted(false);
         JbDevolver.setContentAreaFilled(false);
         JbDevolver.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -159,9 +172,15 @@ public class Home extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbDevolverMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbDevolverMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbDevolverMouseExited(evt);
+            }
         });
 
-        JbVolver.setText("Volver");
+        JbVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/libreria/municipal/btn_volver.png"))); // NOI18N
         JbVolver.setBorderPainted(false);
         JbVolver.setContentAreaFilled(false);
         JbVolver.setMaximumSize(new java.awt.Dimension(108, 50));
@@ -170,6 +189,12 @@ public class Home extends javax.swing.JFrame {
         JbVolver.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbVolverMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                JbVolverMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                JbVolverMouseExited(evt);
             }
         });
 
@@ -205,7 +230,7 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(JcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JbVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -267,6 +292,54 @@ public class Home extends javax.swing.JFrame {
         secScreen.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_JbVolverMouseClicked
+
+    private void JbVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver_pressed.png");
+        JbVolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbVolverMouseEntered
+
+    private void JbVolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver.png");
+        JbVolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbVolverMouseExited
+
+    private void JbBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_buscar_pressed.png");
+        JbBuscar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbBuscarMouseEntered
+
+    private void JbBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_buscar.png");
+        JbBuscar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbBuscarMouseExited
+
+    private void JbSolicitarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_solicitar_pressed.png");
+        JbSolicitar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbSolicitarMouseEntered
+
+    private void JbSolicitarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_solicitar.png");
+        JbSolicitar.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbSolicitarMouseExited
+
+    private void JbDevolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseEntered
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver_pressed.png");
+        JbDevolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbDevolverMouseEntered
+
+    private void JbDevolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseExited
+        // TODO add your handling code here:
+        ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver.png");
+        JbDevolver.setIcon(estatoDosRe);
+    }//GEN-LAST:event_JbDevolverMouseExited
 
     /**
      * @param args the command line arguments
