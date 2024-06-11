@@ -4,6 +4,10 @@
  */
 package libreria.municipal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,43 +16,58 @@ import java.util.List;
  * @author USUARIO
  */
 public class AdminC extends Usuario {
-    private static List<AdminC> adminsRegistrados = new ArrayList<>();
-    static {
-        // Añadimos los administradores predeterminados
-        adminsRegistrados.add(new AdminC("admin", "admin1@correo.com", "123"));
-    }
     
-    public AdminC(String nombre, String correo, String contraseña) {
-        super(nombre, correo, contraseña);
+    public AdminC(String dni,String nombre, String correo, String contraseña) {
+        super(dni, nombre, correo, contraseña);
     }
 
     // Métodos
      
     public static AdminC buscarAdminPorNombre(String nombre) {
-        for (AdminC admin : adminsRegistrados) {
-            if (admin.getNombre().equalsIgnoreCase(nombre)) {
-                return admin;
+        String sql = "SELECT * FROM usuarios WHERE nombre = ? AND tipo = 'admin'";
+
+        try (Connection conn = new CConexion().conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new AdminC(
+                        rs.getString("dni"),
+                        rs.getString("nombre"),
+                        rs.getString("correo"),
+                        rs.getString("contraseña")
+                );
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
     
     public static AdminC validarAdmin(String nombre, String contraseña) {
-        AdminC admin = buscarAdminPorNombre(nombre);
-        if (admin != null && admin.getContraseña().equals(contraseña)) {
-            return admin;
+        String sql = "SELECT * FROM administradores WHERE nombre = ? AND contraseña = ?";
+
+        try (Connection conn = new CConexion().conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nombre);
+            pstmt.setString(2, contraseña);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new AdminC(
+                        rs.getString("dni"),
+                        rs.getString("nombre"),
+                        rs.getString("correo"),
+                        rs.getString("contraseña")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
-    public void gestionarUsuarios() {
-        // Implementación
-    }
-
-    public void actualizarCatalogo() {
-        // Implementación
-    }
-
-    // Otros métodos específicos de admin
-    // ...
 }
 

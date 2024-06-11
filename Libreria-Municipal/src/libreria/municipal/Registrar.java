@@ -43,7 +43,7 @@ public class Registrar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        Tfdusuario = new javax.swing.JTextField();
+        TfdDni = new javax.swing.JTextField();
         Tfdcorreo = new javax.swing.JTextField();
         BtnRegistrar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -51,6 +51,8 @@ public class Registrar extends javax.swing.JFrame {
         Tfdcontraseña = new javax.swing.JPasswordField();
         TfdConfirContraseña = new javax.swing.JPasswordField();
         BtnVolver = new javax.swing.JButton();
+        Tfdusuario = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -85,9 +87,9 @@ public class Registrar extends javax.swing.JFrame {
         jLabel5.setText("Confirme contraseña*");
         jLabel5.setToolTipText("En este caso su usuario sera su correo electronico");
 
-        Tfdusuario.addActionListener(new java.awt.event.ActionListener() {
+        TfdDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TfdusuarioActionPerformed(evt);
+                TfdDniActionPerformed(evt);
             }
         });
 
@@ -137,6 +139,17 @@ public class Registrar extends javax.swing.JFrame {
             }
         });
 
+        Tfdusuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TfdusuarioActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(107, 117, 131));
+        jLabel8.setText("Numero de identificacion*");
+        jLabel8.setToolTipText("En este caso su usuario sera su correo electronico");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -149,20 +162,24 @@ public class Registrar extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addGap(110, 110, 110))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Tfdusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
-                                .addComponent(Tfdcorreo)
-                                .addComponent(Tfdcontraseña)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel7))
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(TfdDni, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                                    .addComponent(Tfdcorreo)
+                                    .addComponent(Tfdcontraseña)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(BtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(Tfdusuario, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE))
+                                .addComponent(jLabel8))
                             .addGap(62, 62, 62)))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,26 +189,30 @@ public class Registrar extends javax.swing.JFrame {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TfdDni, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Tfdusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Tfdusuario, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Tfdcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Tfdcorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Tfdcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Tfdcontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TfdConfirContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(BtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
-                .addGap(18, 18, 18))
+                    .addComponent(BtnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                    .addComponent(BtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -206,7 +227,7 @@ public class Registrar extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -247,7 +268,7 @@ public class Registrar extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -260,9 +281,9 @@ public class Registrar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnRegistrarActionPerformed
 
-    private void TfdusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdusuarioActionPerformed
+    private void TfdDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdDniActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TfdusuarioActionPerformed
+    }//GEN-LAST:event_TfdDniActionPerformed
 
     private void BtnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseEntered
         // TODO add your handling code here:
@@ -278,18 +299,20 @@ public class Registrar extends javax.swing.JFrame {
 
     private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
         // TODO add your handling code here:
+        String dni = TfdDni.getText().trim();
         String nombre = Tfdusuario.getText().trim();
         String correo = Tfdcorreo.getText().trim();
         String contraseña = new String(Tfdcontraseña.getPassword());
         String confirmarContraseña = new String(TfdConfirContraseña.getPassword());
 
-        if (nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty()) {
+        if (dni.isEmpty() || nombre.isEmpty() || correo.isEmpty() || contraseña.isEmpty() || confirmarContraseña.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
+            TfdDni.setText("");
             Tfdusuario.setText("");
             Tfdcorreo.setText("");
             Tfdcontraseña.setText("");
             TfdConfirContraseña.setText("");
-            Tfdusuario.requestFocus();
+            TfdDni.requestFocus();
             return;
         }
 
@@ -306,7 +329,7 @@ public class Registrar extends javax.swing.JFrame {
             Tfdusuario.setText("");
             Tfdcontraseña.setText("");
             TfdConfirContraseña.setText("");
-            Tfdusuario.requestFocus();
+            TfdDni.requestFocus();
             return;
         }
 
@@ -319,9 +342,19 @@ public class Registrar extends javax.swing.JFrame {
             return;
         }
 
-        if (Usuario.registrarUsuario(nombre, correo, contraseña)) {
+        if (Usuario.buscarUsuarioPorDni(dni) != null) {
+            JOptionPane.showMessageDialog(null, "¡El DNI ya está registrado!");
+            TfdDni.setText("");
+            Tfdcontraseña.setText("");
+            TfdConfirContraseña.setText("");
+            TfdDni.requestFocus();
+            return;
+        }
+
+        if (Usuario.registrarUsuario(dni, nombre, correo, contraseña)) {
             enviarCorreoDeConfirmacion(correo);
             JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+            TfdDni.setText("");
             Tfdusuario.setText("");
             Tfdcorreo.setText("");
             Tfdcontraseña.setText("");
@@ -350,6 +383,10 @@ public class Registrar extends javax.swing.JFrame {
         secScreen.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BtnVolverMouseClicked
+
+    private void TfdusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdusuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TfdusuarioActionPerformed
     
     /**
      * @param args the command line arguments
@@ -391,6 +428,7 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JButton BtnRegistrar;
     private javax.swing.JButton BtnVolver;
     private javax.swing.JPasswordField TfdConfirContraseña;
+    private javax.swing.JTextField TfdDni;
     private javax.swing.JPasswordField Tfdcontraseña;
     private javax.swing.JTextField Tfdcorreo;
     private javax.swing.JTextField Tfdusuario;
@@ -401,6 +439,7 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

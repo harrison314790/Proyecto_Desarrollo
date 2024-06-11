@@ -7,8 +7,8 @@ import javax.swing.JOptionPane;
 public class CConexion {
     Connection conectar = null;
     String usuario = "postgres";
-    String password = "cardcaptor";
-    String bd = "ProyectoBD";
+    String password = "3147905916";
+    String bd = "bibliotecaMunicipal-DB";
     String ip = "localhost";
     String puerto = "5432";
     

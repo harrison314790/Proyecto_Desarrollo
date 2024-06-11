@@ -7,9 +7,18 @@ package libreria.municipal;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,14 +28,18 @@ import javax.swing.table.DefaultTableModel;
  * @author USUARIO
  */
 public class Admin extends javax.swing.JFrame {
-    private Catalogo catalogo;
+    private Connection connection;
     private DefaultTableModel mt;
     private DefaultTableModel modeloSolicitudes;
     /**
      * Creates new form Admin
      */
     public Admin() {
-        catalogo = new Catalogo();
+        try {
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bibliotecaMunicipal-DB", "postgres", "3147905916");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initComponents();
         cargarTabla();
         mostrarLibrosSolicitados();
@@ -492,43 +505,84 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow != -1) {
-            // Obtener los valores de los campos de texto
-            String codigo = JtfCodigo.getText().isEmpty() ? null : JtfCodigo.getText();
+            String codigo = JtfCodigo.getText().equals("Codigo") ? generarCodigoUnico() : JtfCodigo.getText();
             String titulo = JtfTitulo.getText().isEmpty() ? null : JtfTitulo.getText();
             String estado = JtfEstado.getText().isEmpty() ? null : JtfEstado.getText();
             String categoria = JtfCategoria.getText().isEmpty() ? null : JtfCategoria.getText();
             String autor = JtfAutor.getText().isEmpty() ? null : JtfAutor.getText();
             String anioText = JtfAñoLanza.getText().isEmpty() ? null : JtfAñoLanza.getText();
-        
-            if (catalogo.existeCodigo(codigo)) {
-                // Mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
-                JtfCodigo.setText(""); // Limpiar el campo de texto del código
-                JtfCodigo.requestFocus(); // Hacer focus en el campo de texto del código
-                return; // Terminar la ejecución aquí
+            
+            if (titulo.equals("Titulo")||estado.equals("Estado")||categoria.equals("Categoria")||autor.equals("Autor")) {
+                JOptionPane.showMessageDialog(this, "Por favor llene los capos.");
+                if(titulo.equals("Titulo")){
+                    JtfTitulo.setText("");
+                    JtfTitulo.requestFocus();
+                    return;
+                }
+                if(estado.equals("Estado")){
+                    JtfEstado.setText("");
+                    JtfEstado.requestFocus();
+                    return;
+                }
+                if(categoria.equals("Categoria")){
+                    JtfCategoria.setText("");
+                    JtfCategoria.requestFocus();
+                    return;
+                }
+                if(autor.equals("Autor")){
+                    JtfAutor.setText("");
+                    JtfAutor.requestFocus();
+                    return;
+                }
             }
 
-            // Verificar si el año es un número
+            if (codigo != null) {
+                try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM libros WHERE codigo = ?")) {
+                    ps.setString(1, codigo);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
+                        JtfCodigo.setText("");
+                        JtfCodigo.requestFocus();
+                        return;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
             Integer anio = null;
             if (anioText != null) {
                 try {
                     anio = Integer.parseInt(anioText);
                 } catch (NumberFormatException e) {
-                    // Mostrar un mensaje de error
-                    JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
-                    JtfAñoLanza.setText(""); // Limpiar el campo de texto del año
-                    JtfAñoLanza.requestFocus(); // Hacer focus en el campo de texto del año
-                    return; // Terminar la ejecución aquí
+                    JOptionPane.showMessageDialog(this, "Por favor, Ingrese el año de lanzamiento.");
+                    JtfAñoLanza.setText("");
+                    JtfAñoLanza.requestFocus();
+                    return;
                 }
             }
 
-            // Obtener el código del libro seleccionado
             String codigoSeleccionado = (String) mt.getValueAt(selectedRow, 0);
 
-            // Actualizar el libro en el catálogo
-            catalogo.actualizarCodigoLibroVacio(codigoSeleccionado, codigo, titulo, estado, categoria, autor, anio);
+            try (PreparedStatement ps = connection.prepareStatement(
+                "UPDATE libros SET codigo = ?, titulo = ?, estado = ?, categoria = ?, autor = ?, ano_lanzamiento = ? WHERE codigo = ?")) {
+                ps.setString(1, codigo);
+                ps.setString(2, titulo);
+                ps.setString(3, estado);
+                ps.setString(4, categoria);
+                ps.setString(5, autor);
+                if (anio != null) {
+                    ps.setInt(6, anio);
+                } else {
+                    ps.setNull(6, Types.INTEGER);
+                }
+                ps.setString(7, codigoSeleccionado);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-            // Limpiar los campos de texto
             JtfTitulo.setText("");
             JtfEstado.setText("");
             JtfCategoria.setText("");
@@ -536,10 +590,7 @@ public class Admin extends javax.swing.JFrame {
             JtfAñoLanza.setText("");
             JtfCodigo.setText("");
 
-            // Mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(this, "El libro ha sido actualizado exitosamente.");
-
-            // Actualizar la tabla
             cargarTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para actualizar.");
@@ -550,16 +601,16 @@ public class Admin extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         if (selectedRow != -1) {
-            // Obtener el código del libro seleccionado
             String codigo = (String) mt.getValueAt(selectedRow, 0);
 
-            // Eliminar el libro del catálogo
-            catalogo.eliminarLibro(codigo);
+            try (PreparedStatement ps = connection.prepareStatement("DELETE FROM libros WHERE codigo = ?")) {
+                ps.setString(1, codigo);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-            // Mostrar un mensaje de éxito
             JOptionPane.showMessageDialog(this, "El libro ha sido eliminado exitosamente.");
-
-            // Actualizar la tabla
             cargarTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un libro para eliminar.");
@@ -568,113 +619,131 @@ public class Admin extends javax.swing.JFrame {
 
     private void JbAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbAgregarMouseClicked
         // TODO add your handling code here:
-        // Obtener los valores de los campos de texto
         String titulo = JtfTitulo.getText();
         String estado = JtfEstado.getText();
         String categoria = JtfCategoria.getText();
         String autor = JtfAutor.getText();
         String anioText = JtfAñoLanza.getText();
-        String codigo = JtfCodigo.getText(); // Asumiendo que tienes un campo de texto para el código
-        
-        int anio;
-            try {
-                anio = Integer.parseInt(anioText);
-            } catch (NumberFormatException e) {
-                // Mostrar un mensaje de error
-                JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
-                JtfAñoLanza.setText(""); // Limpiar el campo de texto del año
-                JtfAñoLanza.requestFocus(); // Hacer focus en el campo de texto del año
-                return; // Terminar la ejecución aquí
-            }
+        String codigo = JtfCodigo.getText();
 
-        // Verificar si el código está vacío o si ya existe en el catálogo
-        if (codigo.isEmpty()) {
-            // Generar un código único para el libro (por ejemplo, usando el tamaño del catálogo)
-            codigo = "" + (catalogo.getLibros().size() + 1);
-        } else if (catalogo.existeCodigo(codigo)) {
-            // Mostrar un mensaje de error
-            JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
-            return; // Terminar la ejecución aquí
+        if (codigo.isEmpty() || titulo.isEmpty() || estado.isEmpty() || categoria.isEmpty() || autor.isEmpty() || anioText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos antes de agregar un libro.");
+            return;
         }
 
-        // Crear un nuevo objeto Libro
-        Libro nuevoLibro = new Libro(codigo, titulo, estado, categoria, autor, anio);
+        try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM libros WHERE codigo = ?")) {
+            ps.setString(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                JOptionPane.showMessageDialog(this, "El código del libro ya existe en el catálogo. Por favor, ingrese un código diferente.");
+                JtfCodigo.setText("");
+                JtfCodigo.requestFocus();
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        // Agregar el nuevo libro al catálogo
-        catalogo.agregarLibro(nuevoLibro);
+        int anio;
+        try {
+            anio = Integer.parseInt(anioText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El año ingresado no es válido. Por favor, ingrese un número.");
+            JtfAñoLanza.setText("");
+            JtfAñoLanza.requestFocus();
+            return;
+        }
 
-        // Limpiar los campos de texto
+        try (PreparedStatement ps = connection.prepareStatement(
+            "INSERT INTO libros (codigo, titulo, estado, categoria, autor, ano_lanzamiento) VALUES (?, ?, ?, ?, ?, ?)")) {
+            ps.setString(1, codigo);
+            ps.setString(2, titulo);
+            ps.setString(3, estado);
+            ps.setString(4, categoria);
+            ps.setString(5, autor);
+            ps.setInt(6, anio);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         JtfTitulo.setText("");
         JtfEstado.setText("");
         JtfCategoria.setText("");
         JtfAutor.setText("");
         JtfAñoLanza.setText("");
-        JtfCodigo.setText(""); // Limpiar el campo de texto del código
+        JtfCodigo.setText("");
 
-        // Mostrar un mensaje de éxito
         JOptionPane.showMessageDialog(this, "El libro ha sido agregado exitosamente.");
-
-        // Actualizar la tabla
         cargarTabla();
     }//GEN-LAST:event_JbAgregarMouseClicked
 
     private void JbPrestarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbPrestarMouseClicked
         // TODO add your handling code here:
-        // Obtén el código del libro seleccionado en la tabla
+        // Verifica si se ha seleccionado una solicitud de préstamo
         if (JtaMostrarSolicitudes.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario con su libro que desea Prestar.");
             return;
         }
-        // Verifica la fecha de devolución de cada préstamo
-        Iterator<Prestamo> iterator = catalogo.getPrestamos().iterator();
-        while (iterator.hasNext()) {
-            Prestamo prestamo = iterator.next();
-            // Si la fecha de devolución es null, salta a la siguiente iteración
-            if (prestamo.getFechaDevolucion() == null) {
-                continue;
-            }
-            // Si la fecha de devolución es anterior a la fecha actual, elimina el préstamo
-            if (prestamo.getFechaDevolucion().isBefore(LocalDate.now())) {
-                iterator.remove();
-            }
-        }
-        
+
         int selectedRow = JtaMostrarSolicitudes.getSelectedRow();
         String codigoLibro = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 1);
-        
-        if (JtfFechaDevolucion.getText().isEmpty()||JtfFechaDevolucion.getText().equals("YYYY-MM-DD")) {
+
+        if (JtfFechaDevolucion.getText().isEmpty() || JtfFechaDevolucion.getText().equals("YYYY-MM-DD")) {
             JOptionPane.showMessageDialog(this, "Por favor, ingrese una fecha de devolución.");
             JtfFechaDevolucion.requestFocus();
             return;
         }
 
-        // Obtén la fecha de devolución ingresada en JtfFechaDevolucion
+        // Obtén la fecha de devolución ingresada
         LocalDate fechaDevolucion = LocalDate.parse(JtfFechaDevolucion.getText());
 
-        // Actualiza el estado del libro en la lista de préstamos y en el catálogo
-        for (Prestamo prestamo : catalogo.getPrestamos()) {
-            if (prestamo.getCodigoLibro().equals(codigoLibro)) {
-                // Verifica si el libro ya está prestado y tiene una fecha de devolución
-                if (prestamo.getEstado().equals("Prestado") && prestamo.getFechaDevolucion() != null) {
+        // Verifica y actualiza el estado del libro en la base de datos
+        try {
+            connection.setAutoCommit(false);
+
+            // Verifica si el libro ya está prestado
+            try (PreparedStatement ps = connection.prepareStatement("SELECT estado FROM prestamos WHERE id = ? AND estado = 'Prestado'")) {
+                ps.setInt(1, Integer.parseInt(codigoLibro));
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
                     JOptionPane.showMessageDialog(this, "El libro no se encuentra disponible para préstamo.");
                     JtfFechaDevolucion.setText("");
+                    connection.rollback();
                     return;
                 }
-                prestamo.setEstado("Prestado");
-                // Verifica si la fecha de préstamo ya está establecida antes de asignarle una nueva
-                if (prestamo.getFechaPrestamo() == null) {
-                    prestamo.setFechaPrestamo(LocalDate.now());
-                }
-                prestamo.setFechaDevolucion(fechaDevolucion);
             }
-        }
-        for (Libro libro : catalogo.getLibros()) {
-            if (libro.getCodigo().equals(codigoLibro)) {
-                libro.setEstado("Prestado");
+
+            // Actualiza el estado del libro en la tabla prestamos
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE prestamos SET estado = 'Prestado', fecha_prestamo = ?, fecha_devolucion = ? WHERE codigo_libro = ?")) {
+                ps.setDate(1, Date.valueOf(LocalDate.now()));
+                ps.setDate(2, Date.valueOf(fechaDevolucion));
+                ps.setString(3, codigoLibro);
+                ps.executeUpdate();
+            }
+
+            // Actualiza el estado del libro en la tabla libros
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE libros SET estado = 'Prestado' WHERE codigo = ?")) {
+                ps.setString(1, codigoLibro);
+                ps.executeUpdate();
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
-        // Actualiza las tablas
         JtfFechaDevolucion.setText("");
         JtfFechaDevolucion.requestFocus();
         cargarTabla();
@@ -682,30 +751,48 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_JbPrestarMouseClicked
 
     private void JbDevolver1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolver1MouseClicked
-        // Obtén el código del libro seleccionado en la tabla de solicitudes
+
+        // Verifica si se ha seleccionado una solicitud de devolución
         if (JtaMostrarSolicitudes.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un usuario con su prestamo que desea devolver.");
             return;
         }
+
         int selectedRow = JtaMostrarSolicitudes.getSelectedRow();
         String codigoLibro = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 1);
 
-        // Actualiza el estado del libro en la lista de préstamos y en el catálogo
-        Iterator<Prestamo> iterator = catalogo.getPrestamos().iterator();
-        while (iterator.hasNext()) {
-            Prestamo prestamo = iterator.next();
-            if (prestamo.getCodigoLibro().equals(codigoLibro)) {
-                prestamo.setFechaDevolucion(LocalDate.now());
-                iterator.remove();  // Elimina el préstamo de la lista
+        // Actualiza el estado del libro en la base de datos
+        try {
+            connection.setAutoCommit(false);
+
+            // Actualiza la fecha de devolución en la tabla prestamos y elimina el préstamo
+            try (PreparedStatement ps = connection.prepareStatement("DELETE FROM prestamos WHERE codigo_libro = ?")) {
+                ps.setString(1, codigoLibro);
+                ps.executeUpdate();
             }
-        }
-        for (Libro libro : catalogo.getLibros()) {
-            if (libro.getCodigo().equals(codigoLibro)) {
-                libro.setEstado("Disponible");
+
+            // Actualiza el estado del libro en la tabla libros
+            try (PreparedStatement ps = connection.prepareStatement("UPDATE libros SET estado = 'Disponible' WHERE codigo = ?")) {
+                ps.setString(1, codigoLibro);
+                ps.executeUpdate();
+            }
+
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
-        // Actualiza las tablas
         cargarTabla();
         mostrarLibrosSolicitados();
     }//GEN-LAST:event_JbDevolver1MouseClicked
@@ -937,24 +1024,52 @@ public class Admin extends javax.swing.JFrame {
         JbVolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbVolverMouseExited
     
+    private String generarCodigoUnico() {
+        String codigo;
+        Random random = new Random();
+        do {
+            codigo = String.format("%04d", random.nextInt(10000)); // Genera un número aleatorio de 4 dígitos
+            try (PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM libros WHERE codigo = ?")) {
+                ps.setString(1, codigo);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next() || rs.getInt(1) == 0) {
+                    break; // Si el código no existe en la base de datos, sal del bucle
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } while (true);
+        return codigo;
+    }
     
     private void cargarTabla() {
         mt = (DefaultTableModel) jTable1.getModel();
         mt.setRowCount(0);
-        
-        // Obtener los libros del catálogo
-        for (Libro libro : catalogo.getLibros()) {
-            // Agregar los libros a la tabla
-            mt.addRow(new Object[]{libro.getCodigo(), libro.getTitulo(), libro.getEstado(), libro.getCategoria(), libro.getAutor(), libro.getAnoLanzamiento()});
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM libros")) {
+
+            while (rs.next()) {
+                mt.addRow(new Object[]{
+                    rs.getString("codigo"),
+                    rs.getString("titulo"),
+                    rs.getString("estado"),
+                    rs.getString("categoria"),
+                    rs.getString("autor"),
+                    rs.getInt("ano_Lanzamiento")
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     
     private void mostrarLibrosSolicitados() {
         modeloSolicitudes = new DefaultTableModel(
-            new Object[][] {},
-            new String[] { "Usuario", "Código", "Título", "Fecha Préstamo", "Fecha Devolución", "Estado" }
+            new Object[][]{},
+            new String[]{"Usuario", "Código", "Título", "Fecha Préstamo", "Fecha Devolución", "Estado"}
         ) {
-            boolean[] canEdit = new boolean[] {false ,false, false, false, false, true };
+            boolean[] canEdit = new boolean[]{false, false, false, false, false, true};
 
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -963,28 +1078,37 @@ public class Admin extends javax.swing.JFrame {
         };
         JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
-        List<Prestamo> prestamos = catalogo.getPrestamos();
-        for (Prestamo prestamo : prestamos) {
-            String nombreUsuario = prestamo.getUsuario().getNombre();
-            String codigoLibro = prestamo.getCodigoLibro();
-            String estadoLibro = prestamo.getEstado();
-            String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
-            String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
-            String fechaDevolucion = prestamo.getFechaDevolucion() != null ? prestamo.getFechaDevolucion().toString() : "N/A";
-            modeloSolicitudes.addRow(new Object[] {nombreUsuario, codigoLibro, tituloLibro, fechaPrestamo, fechaDevolucion, estadoLibro });
-            
-        }
+        try (Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT p.*, u.nombre FROM prestamos p INNER JOIN usuarios u ON p.dni_usuario = u.dni")) {
+
+           while (rs.next()) {
+               modeloSolicitudes.addRow(new Object[]{
+                   rs.getString("nombre"), // Aquí se obtiene el nombre del usuario
+                   rs.getString("codigo_libro"),
+                   obtenerTituloLibroPorCodigo(rs.getString("codigo_libro")),
+                   rs.getDate("fecha_prestamo") != null ? rs.getDate("fecha_prestamo").toLocalDate().toString() : "N/A",
+                   rs.getDate("fecha_devolucion") != null ? rs.getDate("fecha_devolucion").toLocalDate().toString() : "N/A",
+                   rs.getString("estado")
+               });
+           }
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
     }
     
     private String obtenerTituloLibroPorCodigo(String codigoLibro) {
-        for (Libro libro : catalogo.getLibros()) {
-            if (libro.getCodigo().equals(codigoLibro)) {
-                return libro.getTitulo();
+        try (PreparedStatement ps = connection.prepareStatement("SELECT titulo FROM libros WHERE codigo = ?")) {
+            ps.setString(1, codigoLibro);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("titulo");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return "Título no encontrado";
     }
-    
+
     private void agregarListenerComboBox() {
         JcbEstados.addActionListener(new ActionListener() {
             @Override
@@ -1000,36 +1124,32 @@ public class Admin extends javax.swing.JFrame {
             mostrarLibrosSolicitados();
             return;
         }
-        
-        // Obtener la lista de préstamos del catálogo
-        List<Prestamo> prestamos = catalogo.getPrestamos();
-        
-        // Crear un nuevo modelo de tabla
-        DefaultTableModel modeloFiltrado = new DefaultTableModel();
-        
-        // Agregar las columnas al modelo
-        modeloFiltrado.addColumn("Usuario");
-        modeloFiltrado.addColumn("Código");
-        modeloFiltrado.addColumn("Título");
-        modeloFiltrado.addColumn("Fecha Préstamo");
-        modeloFiltrado.addColumn("Fecha Devolucion");
-        modeloFiltrado.addColumn("Estado");
-        
-        // Agregar las filas al modelo
-        for (Prestamo prestamo : prestamos) {
-            if (prestamo.getEstado().equals(estadoSeleccionado)) {
-                Libro libro = catalogo.buscarLibroPorCodigo(prestamo.getCodigoLibro());
-                if (libro != null) {
-                    String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
-                    String fechaDevolucion = prestamo.getFechaDevolucion() != null ? prestamo.getFechaDevolucion().toString() : "N/A";
-                    String titulo = libro.getTitulo();
-                    modeloFiltrado.addRow(new Object[] { prestamo.getUsuario().getNombre(), prestamo.getCodigoLibro(), titulo, fechaPrestamo, fechaDevolucion, prestamo.getEstado() });
-                }
+
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM prestamos WHERE estado = ?")) {
+            ps.setString(1, estadoSeleccionado);
+            ResultSet rs = ps.executeQuery();
+            DefaultTableModel modeloFiltrado = new DefaultTableModel();
+            modeloFiltrado.addColumn("Usuario");
+            modeloFiltrado.addColumn("Código");
+            modeloFiltrado.addColumn("Título");
+            modeloFiltrado.addColumn("Fecha Préstamo");
+            modeloFiltrado.addColumn("Fecha Devolucion");
+            modeloFiltrado.addColumn("Estado");
+
+            while (rs.next()) {
+                modeloFiltrado.addRow(new Object[]{
+                    rs.getString("dni_usuario"),
+                    rs.getString("codigo_libro"),
+                    obtenerTituloLibroPorCodigo(rs.getString("codigo_libro")),
+                    rs.getDate("fecha_prestamo") != null ? rs.getDate("fecha_prestamo").toLocalDate().toString() : "N/A",
+                    rs.getDate("fecha_devolucion") != null ? rs.getDate("fecha_devolucion").toLocalDate().toString() : "N/A",
+                    rs.getString("estado")
+                });
             }
+            JtaMostrarSolicitudes.setModel(modeloFiltrado);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        
-        // Establecer el modelo de la tabla
-        JtaMostrarSolicitudes.setModel(modeloFiltrado);
     }
    
     

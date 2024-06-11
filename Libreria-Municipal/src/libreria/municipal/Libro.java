@@ -70,7 +70,7 @@ public class Libro {
         this.autor = autor;    
     }
 
-    void setAnio(int anoLanzamiento) {
+    void setAnoLanzamiento(int anoLanzamiento) {
         this.anoLanzamiento = anoLanzamiento;    
     }
 }

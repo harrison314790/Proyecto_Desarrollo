@@ -4,6 +4,8 @@
  */
 package libreria.municipal;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Date;
 /**
@@ -17,7 +19,6 @@ public class Prestamo {
     private LocalDate fechaPrestamo;
     private LocalDate fechaDevolucion;
     private String estado;
-    
 
     public Prestamo(Usuario usuario, String codigoLibro, LocalDate fechaPrestamo, LocalDate fechaDevolucion, String estado) {
         this.usuario = usuario;
@@ -26,8 +27,8 @@ public class Prestamo {
         this.fechaDevolucion = fechaDevolucion;
         this.estado = estado;
     }
-    
-        // Getters
+
+    // Getters
     public LocalDate getFechaPrestamo() {
         return fechaPrestamo;
     }
@@ -47,39 +48,41 @@ public class Prestamo {
     public String getCodigoLibro() {
         return codigoLibro;
     }
-    
-    public String getTitulo() {
-        return codigoLibro;
-    }
-    
+
+    // Setters
     public void setNombreUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
     public void setCodigoLibro(String codigoLibro) {
         this.codigoLibro = codigoLibro;
     }
-    
+
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
-    this.fechaDevolucion = fechaDevolucion;
+        this.fechaDevolucion = fechaDevolucion;
     }
-    
+
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
+
     public void setFechaPrestamo(LocalDate fechaPrestamo) {
         this.fechaPrestamo = fechaPrestamo;
     }
 
-    // Métodos
-    public void registrarPrestamo() {
-        // Implementación
+    // Método auxiliar para crear una instancia de Prestamo desde una fila de la base de datos
+    public static Prestamo fromResultSet(ResultSet rs) {
+        try {
+            Usuario usuario = Usuario.buscarUsuarioPorDni(rs.getString("dni_usuario"));
+            String codigoLibro = rs.getString("codigo_libro");
+            LocalDate fechaPrestamo = rs.getDate("fecha_prestamo") != null ? rs.getDate("fecha_prestamo").toLocalDate() : null;
+            LocalDate fechaDevolucion = rs.getDate("fecha_devolucion") != null ? rs.getDate("fecha_devolucion").toLocalDate() : null;
+            String estado = rs.getString("estado");
+            return new Prestamo(usuario, codigoLibro, fechaPrestamo, fechaDevolucion, estado);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-
-    public void registrarDevolucion() {
-        // Implementación
-    }
-
 }
 

@@ -394,7 +394,7 @@ public class Home extends javax.swing.JFrame {
 
     private void llenarTabla(List<Libro> libros) {
         mt = (DefaultTableModel) jTable1.getModel();
-        mt.setRowCount(0); // Limpiar la tabla
+        mt.setRowCount(0);
 
         for (Libro libro : libros) {
             mt.addRow(new Object[]{
@@ -411,13 +411,13 @@ public class Home extends javax.swing.JFrame {
     private void llenarCategorias() {
         Set<String> categorias = catalogo.obtenerCategorias();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-        model.addElement("Todas"); // Añadir opción "Todas"
+        model.addElement("Todas");
         for (String categoria : categorias) {
             model.addElement(categoria);
         }
         JcbCategoria.setModel(model);
     }
-    
+
     private void solicitarPrestamo() {
         if (usuarioLogueado == null) {
             JOptionPane.showMessageDialog(this, "Debe estar logueado para solicitar un préstamo", "Error", JOptionPane.ERROR_MESSAGE);
@@ -444,7 +444,6 @@ public class Home extends javax.swing.JFrame {
         mostrarLibrosSolicitados();
     }
 
-    
     private void mostrarLibrosSolicitados() {
         modeloSolicitudes = new DefaultTableModel(
             new Object[][] {},
@@ -459,16 +458,14 @@ public class Home extends javax.swing.JFrame {
         };
         JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
-        List<Prestamo> prestamos = catalogo.getPrestamos();
+        List<Prestamo> prestamos = catalogo.getPrestamos(usuarioLogueado.getDni());
         for (Prestamo prestamo : prestamos) {
-            if (prestamo.getUsuario().getNombre().equals(usuarioLogueado.getNombre())) {
-                String codigoLibro = prestamo.getCodigoLibro();
-                String estadoLibro = prestamo.getEstado();
-                String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
-                String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
-                String fechaDevolucion = prestamo.getFechaDevolucion() != null ? prestamo.getFechaDevolucion().toString() : "N/A";
-                modeloSolicitudes.addRow(new Object[] { codigoLibro, tituloLibro, fechaPrestamo, fechaDevolucion, estadoLibro });
-            }
+            String codigoLibro = prestamo.getCodigoLibro();
+            String estadoLibro = prestamo.getEstado();
+            String tituloLibro = obtenerTituloLibroPorCodigo(codigoLibro);
+            String fechaPrestamo = prestamo.getFechaPrestamo() != null ? prestamo.getFechaPrestamo().toString() : "N/A";
+            String fechaDevolucion = prestamo.getFechaDevolucion() != null ? prestamo.getFechaDevolucion().toString() : "N/A";
+            modeloSolicitudes.addRow(new Object[] { codigoLibro, tituloLibro, fechaPrestamo, fechaDevolucion, estadoLibro });
         }
     }
 
@@ -480,7 +477,7 @@ public class Home extends javax.swing.JFrame {
         }
         return "Título no encontrado";
     }
-    
+
     private void devolverLibro() {
         if (usuarioLogueado == null) {
             JOptionPane.showMessageDialog(this, "Debe estar logueado para devolver un libro", "Error", JOptionPane.ERROR_MESSAGE);
@@ -505,6 +502,5 @@ public class Home extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         llenarTabla(catalogo.getLibros());
         mostrarLibrosSolicitados();
-    }
-        
+    }    
 }

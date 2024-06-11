@@ -4,6 +4,10 @@
  */
 package libreria.municipal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,26 +16,24 @@ import java.util.List;
  * @author USUARIO
  */
 public class Usuario {
+
+    private String dni;
     private String nombre;
     private String correo;
     private String contraseña;
     private static List<Usuario> usuariosRegistrados = new ArrayList<>();
-    
+
     static {
-        // Añadimos los administradores predeterminados
-        usuariosRegistrados.add(new AdminC("cliente", "cliente1@correo.com", "123"));
-        usuariosRegistrados.add(new AdminC("kevin", "cliente2@correo.com", "123"));
-        usuariosRegistrados.add(new AdminC("carlos", "cliente3@correo.com", "123"));
-        usuariosRegistrados.add(new AdminC("stiven", "cliente4@correo.com", "123"));
-        usuariosRegistrados.add(new AdminC("harri", "cliente5@correo.com", "123"));
+        // No añadimos administradores predeterminados aquí, se cargan desde la base de datos
     }
 
-    public Usuario(String nombre, String correo, String contraseña) {
+    public Usuario(String dni, String nombre, String correo, String contraseña) {
+        this.dni = dni;
         this.nombre = nombre;
         this.correo = correo;
         this.contraseña = contraseña;
     }
-    
+
     // Getters y Setters
     public String getNombre() {
         return nombre;
@@ -44,34 +46,91 @@ public class Usuario {
     public String getContraseña() {
         return contraseña;
     }
-    public static boolean registrarUsuario(String nombre, String correo, String contraseña) {
-        if (buscarUsuarioPorNombre(nombre) != null || buscarUsuarioPorCorreo(correo) != null) {
-            return false; // Usuario o correo ya registrados
-        }
-        Usuario nuevoUsuario = new Usuario(nombre, correo, contraseña);
-        usuariosRegistrados.add(nuevoUsuario);
-        return true;
+
+    public String getDni() {
+        return dni;
     }
-    
+
+    public static boolean registrarUsuario(String dni, String nombre, String correo, String contraseña) {
+        if (buscarUsuarioPorNombre(nombre) != null || buscarUsuarioPorCorreo(correo) != null || buscarUsuarioPorDni(dni) != null) {
+            return false; // Usuario, correo o DNI ya registrados
+        }
+        try (Connection con = new CConexion().conectar()) {
+            String sql = "INSERT INTO usuarios (dni, nombre, correo, contraseña) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, dni);
+                ps.setString(2, nombre);
+                ps.setString(3, correo);
+                ps.setString(4, contraseña);
+                ps.executeUpdate();
+            }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static Usuario buscarUsuarioPorCorreo(String correo) {
-        for (Usuario usuario : usuariosRegistrados) {
-            if (usuario.getCorreo().equalsIgnoreCase(correo)) {
-                return usuario;
+        try (Connection con = new CConexion().conectar()) {
+            String sql = "SELECT * FROM usuarios WHERE correo = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, correo);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return new Usuario(rs.getString("dni"), rs.getString("nombre"), rs.getString("correo"), rs.getString("contraseña"));
+                    }
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
-    
-    
+
     public static Usuario buscarUsuarioPorNombre(String nombre) {
-        for (Usuario usuario : usuariosRegistrados) {
-            if (usuario.getNombre().equalsIgnoreCase(nombre)) {
-                return usuario;
+        try (Connection con = new CConexion().conectar()) {
+            String sql = "SELECT * FROM usuarios WHERE nombre = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, nombre);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return new Usuario(rs.getString("dni"), rs.getString("nombre"), rs.getString("correo"), rs.getString("contraseña"));
+                    }
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }
-    
+
+    public static Usuario buscarUsuarioPorDni(String dni) {
+        Usuario usuario = null;
+        String sql = "SELECT * FROM usuarios WHERE dni = ?";
+
+        try (Connection conn = new CConexion().conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, dni);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    usuario = new Usuario(
+                            rs.getString("dni"),
+                            rs.getString("nombre"),
+                            rs.getString("correo"),
+                            rs.getString("contraseña")
+                           
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuario;
+    }
+
     public static Usuario validarUsuario(String nombre, String contraseña) {
         Usuario usuario = buscarUsuarioPorNombre(nombre);
         if (usuario != null && usuario.getContraseña().equals(contraseña)) {
@@ -79,10 +138,21 @@ public class Usuario {
         }
         return null;
     }
-    
-    public static List<Usuario> getUsuariosRegistrados() {
-        return usuariosRegistrados;
-    }
 
+    public static List<Usuario> getUsuariosRegistrados() {
+        List<Usuario> usuarios = new ArrayList<>();
+        try (Connection con = new CConexion().conectar()) {
+            String sql = "SELECT * FROM usuarios";
+            try (PreparedStatement ps = con.prepareStatement(sql);
+                 ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    usuarios.add(new Usuario(rs.getString("dni"), rs.getString("nombre"), rs.getString("correo"), rs.getString("contraseña")));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuarios;
+    }
 }
 

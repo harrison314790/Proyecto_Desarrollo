@@ -8,6 +8,8 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        CConexion objetoConexion = new CConexion();
+        objetoConexion.conectar();  
     }
 
     @SuppressWarnings("unchecked")
