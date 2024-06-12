@@ -35,11 +35,7 @@ public class Admin extends javax.swing.JFrame {
      * Creates new form Admin
      */
     public Admin() {
-        try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bibliotecaMunicipal-DB", "postgres", "3147905916");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        connection = new CConexion().conectar();
         initComponents();
         cargarTabla();
         mostrarLibrosSolicitados();

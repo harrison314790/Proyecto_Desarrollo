@@ -4,6 +4,10 @@
  */
 package libreria.municipal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import java.util.Properties;
 import javax.mail.Message;
@@ -20,11 +24,12 @@ import javax.mail.PasswordAuthentication;
  * @author USUARIO
  */
 public class Registrar extends javax.swing.JFrame {
-
+    private Connection connection;
     /**
      * Creates new form Regiistrar
      */
     public Registrar() {
+        connection = new CConexion().conectar();
         initComponents();
     }
 
@@ -324,43 +329,38 @@ public class Registrar extends javax.swing.JFrame {
             return;
         }
 
-        if (Usuario.buscarUsuarioPorNombre(nombre) != null) {
-            JOptionPane.showMessageDialog(null, "¡El nombre de usuario ya está registrado!");
-            Tfdusuario.setText("");
-            Tfdcontraseña.setText("");
-            TfdConfirContraseña.setText("");
-            TfdDni.requestFocus();
-            return;
-        }
+        try {
+            if (usuarioExiste("dni", dni)) {
+                JOptionPane.showMessageDialog(null, "¡El DNI ya está registrado!");
+                TfdDni.setText("");
+                TfdDni.requestFocus();
+                return;
+            }
 
-        if (Usuario.buscarUsuarioPorCorreo(correo) != null) {
-            JOptionPane.showMessageDialog(null, "¡El correo electrónico ya está registrado!");
-            Tfdcorreo.setText("");
-            Tfdcontraseña.setText("");
-            TfdConfirContraseña.setText("");
-            Tfdcorreo.requestFocus();
-            return;
-        }
+            if (usuarioExiste("nombre", nombre)) {
+                JOptionPane.showMessageDialog(null, "¡El nombre de usuario ya está registrado!");
+                Tfdusuario.setText("");
+                Tfdusuario.requestFocus();
+                return;
+            }
 
-        if (Usuario.buscarUsuarioPorDni(dni) != null) {
-            JOptionPane.showMessageDialog(null, "¡El DNI ya está registrado!");
-            TfdDni.setText("");
-            Tfdcontraseña.setText("");
-            TfdConfirContraseña.setText("");
-            TfdDni.requestFocus();
-            return;
-        }
+            if (usuarioExiste("correo", correo)) {
+                JOptionPane.showMessageDialog(null, "¡El correo electrónico ya está registrado!");
+                Tfdcorreo.setText("");
+                Tfdcorreo.requestFocus();
+                return;
+            }
 
-        if (Usuario.registrarUsuario(dni, nombre, correo, contraseña)) {
-            enviarCorreoDeConfirmacion(correo);
-            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
-            TfdDni.setText("");
-            Tfdusuario.setText("");
-            Tfdcorreo.setText("");
-            Tfdcontraseña.setText("");
-            TfdConfirContraseña.setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "¡Hubo un problema al registrar el usuario!");
+            if (registrarUsuario(dni, nombre, correo, contraseña)) {
+                enviarCorreoDeConfirmacion(correo);
+                JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+                limpiarCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "¡Hubo un problema al registrar el usuario!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "¡Hubo un error al acceder a la base de datos!");
         }
         
     }//GEN-LAST:event_BtnRegistrarMouseClicked
@@ -387,6 +387,77 @@ public class Registrar extends javax.swing.JFrame {
     private void TfdusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TfdusuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TfdusuarioActionPerformed
+    
+    private boolean usuarioExiste(String campo, String valor) throws SQLException {
+        String query = "SELECT COUNT(*) FROM usuarios WHERE " + campo + " = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, valor);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean registrarUsuario(String dni, String nombre, String correo, String contraseña) throws SQLException {
+        String query = "INSERT INTO usuarios (dni, nombre, correo, contraseña) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, dni);
+            ps.setString(2, nombre);
+            ps.setString(3, correo);
+            ps.setString(4, contraseña);
+            return ps.executeUpdate() > 0;
+        }
+    }
+
+    private void limpiarCampos() {
+        TfdDni.setText("");
+        Tfdusuario.setText("");
+        Tfdcorreo.setText("");
+        Tfdcontraseña.setText("");
+        TfdConfirContraseña.setText("");
+    }
+
+    // Método para enviar el correo de confirmación (sin cambios)
+    private void enviarCorreoDeConfirmacion(String destinatario) {
+        final String remitente = "harrison31479@gmail.com";
+        final String password = "yqnt vwsx vxgt tgcq";
+
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.gmail.com");
+        propiedades.put("mail.smtp.port", "587");
+        propiedades.put("mail.smtp.auth", "true");
+        propiedades.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(remitente, password);
+            }
+        });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(remitente));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+            message.setSubject("¡Bienvenido a nuestra biblioteca!");
+
+            String mensajeBienvenida = "¡Hola!\n\n";
+            mensajeBienvenida += "Te damos la más cordial bienvenida a nuestra biblioteca. Nos alegra que hayas decidido registrarte como cliente.\n";
+            mensajeBienvenida += "A partir de ahora, podrás realizar pedidos de libros y disfrutar de todos nuestros servicios.\n\n";
+            mensajeBienvenida += "¡Esperamos que tu experiencia con nosotros sea excelente!\n\n";
+            mensajeBienvenida += "Atentamente,\n";
+            mensajeBienvenida += "El equipo de la Biblioteca Municipal";
+
+            message.setText(mensajeBienvenida);
+            Transport.send(message);
+            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
+        } catch (MessagingException e) {
+            JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
+            throw new RuntimeException(e);
+        }
+    }
     
     /**
      * @param args the command line arguments
@@ -445,48 +516,4 @@ public class Registrar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 
-    private void enviarCorreoDeConfirmacion(String destinatario) {
-        final String remitente = "harrison31479@gmail.com"; // Cambia esto a tu correo
-        final String password = "yqnt vwsx vxgt tgcq"; // Cambia esto a tu contraseña
-
-        // Configuración del servidor de correo
-        Properties propiedades = new Properties();
-        propiedades.put("mail.smtp.host", "smtp.gmail.com");
-        propiedades.put("mail.smtp.port", "587");
-        propiedades.put("mail.smtp.auth", "true");
-        propiedades.put("mail.smtp.starttls.enable", "true");
-
-        // Crear una sesión de correo
-        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(remitente, password);
-            }
-        });
-
-        try {
-            // Crear el mensaje
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(remitente));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-            message.setSubject("¡Bienvenido a nuestra biblioteca!");
-
-            // Mensaje de bienvenida personalizado
-            String mensajeBienvenida = "¡Hola!\n\n";
-            mensajeBienvenida += "Te damos la más cordial bienvenida a nuestra biblioteca. Nos alegra que hayas decidido registrarte como cliente.\n";
-            mensajeBienvenida += "A partir de ahora, podrás realizar pedidos de libros y disfrutar de todos nuestros servicios.\n\n";
-            mensajeBienvenida += "¡Esperamos que tu experiencia con nosotros sea excelente!\n\n";
-            mensajeBienvenida += "Atentamente,\n";
-            mensajeBienvenida += "El equipo de la Biblioteca Municipal";
-
-            message.setText(mensajeBienvenida);
-
-            // Enviar el mensaje
-            Transport.send(message);
-
-            JOptionPane.showMessageDialog(null, "¡Te has registrado exitosamente! Se ha enviado un correo de bienvenida.");
-        } catch (MessagingException e) {
-            JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
-            throw new RuntimeException(e);
-        }
-    }
 }

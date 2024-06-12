@@ -4,6 +4,14 @@
  */
 package libreria.municipal;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.DefaultComboBoxModel;
@@ -19,18 +27,18 @@ import javax.swing.table.DefaultTableModel;
 public class Home extends javax.swing.JFrame {
     private DefaultTableModel mt;
     private DefaultTableModel modeloSolicitudes;
-    private Catalogo catalogo;
     private Usuario usuarioLogueado;
+    private Connection connection;
     /**
      * Creates new form Home
      */
     public Home(Usuario usuarioLogueado) {
-        this.catalogo = new Catalogo();
         this.usuarioLogueado = usuarioLogueado;
         initComponents();
+        connection = new CConexion().conectar();
         mostrarLibrosSolicitados();
         llenarCategorias();
-        llenarTabla(catalogo.getLibros());
+        llenarTabla(obtenerLibros());
         
     }
 
@@ -270,9 +278,13 @@ public class Home extends javax.swing.JFrame {
 
     private void JbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseClicked
         // TODO add your handling code here:
-        
         String categoria = JcbCategoria.getSelectedItem().toString();
-        List<Libro> libros = catalogo.buscarPorCategoria(categoria);
+        List<Libro> libros;
+        if ("Todas".equals(categoria)) {
+            libros = obtenerLibros();
+        } else {
+            libros = buscarPorCategoria(categoria);
+        }
         llenarTabla(libros);
     }//GEN-LAST:event_JbBuscarMouseClicked
 
@@ -409,13 +421,28 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void llenarCategorias() {
-        Set<String> categorias = catalogo.obtenerCategorias();
+        Set<String> categorias = obtenerCategorias();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         model.addElement("Todas");
         for (String categoria : categorias) {
             model.addElement(categoria);
         }
         JcbCategoria.setModel(model);
+    }
+    
+    private Set<String> obtenerCategorias() {
+        Set<String> categorias = new HashSet<>();
+        String query = "SELECT DISTINCT categoria FROM libros";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                categorias.add(rs.getString("categoria"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return categorias;
     }
 
     private void solicitarPrestamo() {
@@ -438,9 +465,44 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        catalogo.solicitarPrestamo(usuarioLogueado, codigoLibro);
-        JOptionPane.showMessageDialog(this, "Solicitud de préstamo realizada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        llenarTabla(catalogo.getLibros());
+        String insertPrestamo = "INSERT INTO prestamos (dni_usuario, codigo_libro, fecha_prestamo, fecha_devolucion, estado) VALUES (?, ?, ?, ?, ?)";
+        String updateLibro = "UPDATE libros SET estado = ? WHERE codigo = ?";
+
+        try (PreparedStatement psPrestamo = connection.prepareStatement(insertPrestamo);
+             PreparedStatement psLibro = connection.prepareStatement(updateLibro)) {
+            
+            connection.setAutoCommit(false);
+            
+            psPrestamo.setString(1, usuarioLogueado.getDni());
+            psPrestamo.setString(2, codigoLibro);
+            psPrestamo.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+            psPrestamo.setDate(4, java.sql.Date.valueOf(LocalDate.now().plusDays(15))); // Suponiendo un periodo de préstamo de 15 días
+            psPrestamo.setString(5, "Pendiente");
+            psPrestamo.executeUpdate();
+
+            psLibro.setString(1, "Pendiente");
+            psLibro.setString(2, codigoLibro);
+            psLibro.executeUpdate();
+
+            connection.commit();
+            
+            JOptionPane.showMessageDialog(this, "Solicitud de préstamo realizada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        llenarTabla(obtenerLibros());
         mostrarLibrosSolicitados();
     }
 
@@ -458,7 +520,7 @@ public class Home extends javax.swing.JFrame {
         };
         JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
-        List<Prestamo> prestamos = catalogo.getPrestamos(usuarioLogueado.getDni());
+        List<Prestamo> prestamos = obtenerPrestamos(usuarioLogueado.getDni());
         for (Prestamo prestamo : prestamos) {
             String codigoLibro = prestamo.getCodigoLibro();
             String estadoLibro = prestamo.getEstado();
@@ -468,14 +530,87 @@ public class Home extends javax.swing.JFrame {
             modeloSolicitudes.addRow(new Object[] { codigoLibro, tituloLibro, fechaPrestamo, fechaDevolucion, estadoLibro });
         }
     }
+    
+    private List<Libro> buscarPorCategoria(String categoria) {
+        List<Libro> libros = new ArrayList<>();
+        String query = "SELECT * FROM libros WHERE categoria = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, categoria);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Libro libro = new Libro(
+                        rs.getString("codigo"),
+                        rs.getString("titulo"),
+                        rs.getString("estado"),
+                        rs.getString("categoria"),
+                        rs.getString("autor"),
+                        rs.getInt("ano_lanzamiento")
+                    );
+                    libros.add(libro);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
+    }
+    
+    private List<Prestamo> obtenerPrestamos(String dniUsuario) {
+        List<Prestamo> prestamos = new ArrayList<>();
+        String query = "SELECT * FROM prestamos WHERE dni_usuario = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, dniUsuario);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Usuario usuario = Usuario.buscarUsuarioPorDni(rs.getString("dni_usuario"));
+                    Prestamo prestamo = new Prestamo(
+                        usuario,
+                        rs.getString("codigo_libro"),
+                        rs.getDate("fecha_prestamo") != null ? rs.getDate("fecha_prestamo").toLocalDate() : null,
+                        rs.getDate("fecha_devolucion") != null ? rs.getDate("fecha_devolucion").toLocalDate() : null,
+                        rs.getString("estado")
+                    );
+                    prestamos.add(prestamo);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prestamos;
+    }
 
     private String obtenerTituloLibroPorCodigo(String codigoLibro) {
-        for (Libro libro : catalogo.getLibros()) {
+        for (Libro libro : obtenerLibros()) {
             if (libro.getCodigo().equals(codigoLibro)) {
                 return libro.getTitulo();
             }
         }
         return "Título no encontrado";
+    }
+    
+    private List<Libro> obtenerLibros() {
+        List<Libro> libros = new ArrayList<>();
+        String query = "SELECT * FROM libros";
+
+        try (PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Libro libro = new Libro(
+                    rs.getString("codigo"),
+                    rs.getString("titulo"),
+                    rs.getString("estado"),
+                    rs.getString("categoria"),
+                    rs.getString("autor"),
+                    rs.getInt("ano_lanzamiento")
+                );
+                libros.add(libro);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return libros;
     }
 
     private void devolverLibro() {
@@ -498,9 +633,41 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
-        catalogo.devolverLibro(usuarioLogueado, codigoLibro);
-        JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        llenarTabla(catalogo.getLibros());
+        String deletePrestamo = "DELETE FROM prestamos WHERE dni_usuario = ? AND codigo_libro = ?";
+        String updateLibro = "UPDATE libros SET estado = ? WHERE codigo = ?";
+
+        try (PreparedStatement psPrestamo = connection.prepareStatement(deletePrestamo);
+             PreparedStatement psLibro = connection.prepareStatement(updateLibro)) {
+            
+            connection.setAutoCommit(false);
+            
+            psPrestamo.setString(1, usuarioLogueado.getDni());
+            psPrestamo.setString(2, codigoLibro);
+            psPrestamo.executeUpdate();
+
+            psLibro.setString(1, "Disponible");
+            psLibro.setString(2, codigoLibro);
+            psLibro.executeUpdate();
+
+            connection.commit();
+
+            JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        llenarTabla(obtenerLibros());
         mostrarLibrosSolicitados();
     }    
 }
