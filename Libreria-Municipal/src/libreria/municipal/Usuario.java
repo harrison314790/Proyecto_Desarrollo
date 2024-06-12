@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -88,22 +89,6 @@ public class Usuario {
         return null;
     }
 
-    public static Usuario buscarUsuarioPorNombre(String nombre) {
-        try (Connection con = new CConexion().conectar()) {
-            String sql = "SELECT * FROM usuarios WHERE nombre = ?";
-            try (PreparedStatement ps = con.prepareStatement(sql)) {
-                ps.setString(1, nombre);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        return new Usuario(rs.getString("dni"), rs.getString("nombre"), rs.getString("correo"), rs.getString("contraseña"));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public static Usuario buscarUsuarioPorDni(String dni) {
         Usuario usuario = null;
@@ -133,7 +118,7 @@ public class Usuario {
 
     public static Usuario validarUsuario(String nombre, String contraseña) {
         Usuario usuario = buscarUsuarioPorNombre(nombre);
-        if (usuario != null && usuario.getContraseña().equals(contraseña)) {
+        if (usuario != null && BCrypt.checkpw(contraseña, usuario.getContraseña())) {
             return usuario;
         }
         return null;
@@ -153,6 +138,29 @@ public class Usuario {
             e.printStackTrace();
         }
         return usuarios;
+    }
+    
+    public static Usuario buscarUsuarioPorNombre(String nombre) {
+        String sql = "SELECT * FROM usuarios WHERE nombre = ?";
+
+        try (Connection conn = new CConexion().conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Usuario(
+                        rs.getString("dni"),
+                        rs.getString("nombre"),
+                        rs.getString("correo"),
+                        rs.getString("contraseña")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

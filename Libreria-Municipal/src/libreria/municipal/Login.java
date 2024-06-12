@@ -235,7 +235,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistrarMouseExited
 
     private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
-        if (campoUsuario.getText().isEmpty() || campoContra.getText().isEmpty()) {
+        if (campoUsuario.getText().isEmpty() || campoContra.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
             campoUsuario.setText("");
             campoContra.setText("");
@@ -272,6 +272,7 @@ public class Login extends javax.swing.JFrame {
                 campoUsuario.requestFocus();
             }
         }
+    
     }//GEN-LAST:event_BtnIngresarMouseClicked
 
         

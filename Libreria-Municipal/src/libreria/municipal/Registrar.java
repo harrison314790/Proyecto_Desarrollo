@@ -18,6 +18,7 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -401,16 +402,6 @@ public class Registrar extends javax.swing.JFrame {
         return false;
     }
 
-    private boolean registrarUsuario(String dni, String nombre, String correo, String contraseña) throws SQLException {
-        String query = "INSERT INTO usuarios (dni, nombre, correo, contraseña) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, dni);
-            ps.setString(2, nombre);
-            ps.setString(3, correo);
-            ps.setString(4, contraseña);
-            return ps.executeUpdate() > 0;
-        }
-    }
 
     private void limpiarCampos() {
         TfdDni.setText("");
@@ -456,6 +447,20 @@ public class Registrar extends javax.swing.JFrame {
         } catch (MessagingException e) {
             JOptionPane.showMessageDialog(null, "¡Ha ocurrido un error al enviar el correo de confirmación!");
             throw new RuntimeException(e);
+        }
+    }
+    
+    
+    private boolean registrarUsuario(String dni, String nombre, String correo, String contraseña) throws SQLException {
+        String query = "INSERT INTO usuarios (dni, nombre, correo, contraseña) VALUES (?, ?, ?, ?)";
+        String hashedPassword = BCrypt.hashpw(contraseña, BCrypt.gensalt());
+
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, dni);
+            ps.setString(2, nombre);
+            ps.setString(3, correo);
+            ps.setString(4, hashedPassword);
+            return ps.executeUpdate() > 0;
         }
     }
     

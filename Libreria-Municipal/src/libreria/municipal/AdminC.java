@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -47,22 +48,24 @@ public class AdminC extends Usuario {
     }
     
     public static AdminC validarAdmin(String nombre, String contraseña) {
-        String sql = "SELECT * FROM administradores WHERE nombre = ? AND contraseña = ?";
+        String sql = "SELECT * FROM administradores WHERE nombre = ?";
 
         try (Connection conn = new CConexion().conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, nombre);
-            pstmt.setString(2, contraseña);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new AdminC(
-                        rs.getString("dni"),
-                        rs.getString("nombre"),
-                        rs.getString("correo"),
-                        rs.getString("contraseña")
-                );
+                String hashContraseña = rs.getString("contraseña");
+                if (BCrypt.checkpw(contraseña, hashContraseña)) {
+                    return new AdminC(
+                            rs.getString("dni"),
+                            rs.getString("nombre"),
+                            rs.getString("correo"),
+                            hashContraseña
+                    );
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
