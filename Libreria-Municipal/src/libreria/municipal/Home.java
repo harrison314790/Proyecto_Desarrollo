@@ -353,57 +353,6 @@ public class Home extends javax.swing.JFrame {
         JbDevolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbDevolverMouseExited
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JbBuscar;
-    private javax.swing.JButton JbDevolver;
-    private javax.swing.JButton JbSolicitar;
-    private javax.swing.JButton JbVolver;
-    private javax.swing.JComboBox<String> JcbCategoria;
-    private javax.swing.JTable JtaMostrarSolicitudes;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel txtTitulo;
-    // End of variables declaration//GEN-END:variables
-
     private void llenarTabla(List<Libro> libros) {
         mt = (DefaultTableModel) jTable1.getModel();
         mt.setRowCount(0);
@@ -476,7 +425,7 @@ public class Home extends javax.swing.JFrame {
             psPrestamo.setString(1, usuarioLogueado.getDni());
             psPrestamo.setString(2, codigoLibro);
             psPrestamo.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
-            psPrestamo.setDate(4, java.sql.Date.valueOf(LocalDate.now().plusDays(15))); // Suponiendo un periodo de préstamo de 15 días
+            psPrestamo.setDate(4, null);
             psPrestamo.setString(5, "Pendiente");
             psPrestamo.executeUpdate();
 
@@ -669,5 +618,58 @@ public class Home extends javax.swing.JFrame {
 
         llenarTabla(obtenerLibros());
         mostrarLibrosSolicitados();
-    }    
+    }  
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Login().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JbBuscar;
+    private javax.swing.JButton JbDevolver;
+    private javax.swing.JButton JbSolicitar;
+    private javax.swing.JButton JbVolver;
+    private javax.swing.JComboBox<String> JcbCategoria;
+    private javax.swing.JTable JtaMostrarSolicitudes;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel txtTitulo;
+    // End of variables declaration//GEN-END:variables
+
+      
 }

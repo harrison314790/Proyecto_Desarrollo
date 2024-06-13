@@ -1120,8 +1120,13 @@ public class Admin extends javax.swing.JFrame {
             mostrarLibrosSolicitados();
             return;
         }
+        
+        String sql = "SELECT p.*, u.nombre AS nombre_usuario " +
+                 "FROM prestamos p " +
+                 "JOIN usuarios u ON p.dni_usuario = u.dni " +
+                 "WHERE p.estado = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM prestamos WHERE estado = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, estadoSeleccionado);
             ResultSet rs = ps.executeQuery();
             DefaultTableModel modeloFiltrado = new DefaultTableModel();
@@ -1134,7 +1139,7 @@ public class Admin extends javax.swing.JFrame {
 
             while (rs.next()) {
                 modeloFiltrado.addRow(new Object[]{
-                    rs.getString("dni_usuario"),
+                    rs.getString("nombre_usuario"),
                     rs.getString("codigo_libro"),
                     obtenerTituloLibroPorCodigo(rs.getString("codigo_libro")),
                     rs.getDate("fecha_prestamo") != null ? rs.getDate("fecha_prestamo").toLocalDate().toString() : "N/A",
