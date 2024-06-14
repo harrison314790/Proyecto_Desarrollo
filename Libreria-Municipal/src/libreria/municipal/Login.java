@@ -4,14 +4,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 
+/*
+ * Ventana de inicio de sesión para la librería municipal.
+ */
 public class Login extends javax.swing.JFrame {
 
+    /*
+     * Constructor de la clase Login.
+     * Inicializa los componentes de la interfaz gráfica y realiza la conexión inicial.
+     */
     public Login() {
         initComponents();
+        // Establecer conexión con la base de datos al iniciar sesión
         CConexion objetoConexion = new CConexion();
         objetoConexion.conectar();  
     }
 
+    /*
+     * Se definen todos y cada uno de los componentes que conforman la GUI y sus propiedades
+     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -203,37 +214,62 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Método para manejar el evento cuando el cursor entra en el botón de ingresar.
+     * Cambia el ícono del botón a su estado presionado.
+     * @param evt Evento del mouse.
+     */
     private void BtnIngresarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseEntered
-        // TODO add your handling code here:
         ImageIcon estatoDos = new ImageIcon("src\\libreria\\municipal\\btn_acceder_pressed.png");
         BtnIngresar.setIcon(estatoDos);
     }//GEN-LAST:event_BtnIngresarMouseEntered
 
+    /*
+     * Método para manejar el evento cuando el cursor sale del botón de ingresar.
+     * Restaura el ícono del botón a su estado normal.
+     * @param evt Evento del mouse.
+     */
     private void BtnIngresarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseExited
-        // TODO add your handling code here:
         ImageIcon estatoUno = new ImageIcon("src\\libreria\\municipal\\btn_acceder.png");
         BtnIngresar.setIcon(estatoUno);
     }//GEN-LAST:event_BtnIngresarMouseExited
 
+    /*
+     * Método para manejar el evento cuando se hace clic en el botón de registrar.
+     * Abre la ventana de registro y cierra la ventana actual de inicio de sesión.
+     * @param evt Evento del mouse.
+     */
     private void BtnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseClicked
-        // TODO add your handling code here
         Registrar secScreen = new Registrar();
         secScreen.setVisible(true);
-        this.dispose();
+        this.dispose();// Cierra la ventana actual de login
     }//GEN-LAST:event_BtnRegistrarMouseClicked
 
+    /*
+     * Método para manejar el evento cuando el cursor entra en el botón de registrar.
+     * Cambia el ícono del botón a su estado presionado.
+     * @param evt Evento del mouse.
+     */
     private void BtnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseEntered
-        // TODO add your handling code here:
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_registrar_pressed.png");
         BtnRegistrar.setIcon(estatoDosRe);
     }//GEN-LAST:event_BtnRegistrarMouseEntered
 
+    /*
+     * Método para manejar el evento cuando el cursor sale del botón de registrar.
+     * Restaura el ícono del botón a su estado normal.
+     * @param evt Evento del mouse.
+     */
     private void BtnRegistrarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegistrarMouseExited
-        // TODO add your handling code here:
         ImageIcon estadoUnoRe = new ImageIcon("src\\libreria\\municipal\\btn_registrar.png");
         BtnRegistrar.setIcon(estadoUnoRe);
     }//GEN-LAST:event_BtnRegistrarMouseExited
 
+    /*
+     * Método para manejar el evento cuando se hace clic en el botón de ingresar.
+     * Valida el usuario y la contraseña ingresados, y muestra la ventana correspondiente según el tipo de usuario.
+     * @param evt Evento del mouse.
+     */
     private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
         if (campoUsuario.getText().isEmpty() || campoContra.getPassword().length == 0) {
             JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos.");
@@ -253,7 +289,7 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Bienvenido Cliente!");
                 Home firstScreen = new Home(usuario);
                 firstScreen.setVisible(true);
-                this.dispose();
+                this.dispose(); // Cierra la ventana actual de login
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 campoContra.setText("");
@@ -265,21 +301,23 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Bienvenido Admin!");
                 Admin thirdScreen = new Admin();
                 thirdScreen.setVisible(true);
-                this.dispose();
+                this.dispose(); // Cierra la ventana actual de login
             } else {
                 JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
                 campoContra.setText("");
                 campoUsuario.requestFocus();
             }
         }
-    
     }//GEN-LAST:event_BtnIngresarMouseClicked
 
-        
+    /*
+     * Método principal que inicia la aplicación.
+     * @param args Argumentos de la línea de comandos (no se utilizan en este caso).
+     */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Login().setVisible(true); // Crea una instancia de la ventana de login y la muestra
             }
         });
     }

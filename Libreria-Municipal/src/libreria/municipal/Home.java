@@ -276,8 +276,11 @@ public class Home extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+     * Maneja el evento de clic del botón de búsqueda.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseClicked
-        // TODO add your handling code here:
         String categoria = JcbCategoria.getSelectedItem().toString();
         List<Libro> libros;
         if ("Todas".equals(categoria)) {
@@ -288,71 +291,117 @@ public class Home extends javax.swing.JFrame {
         llenarTabla(libros);
     }//GEN-LAST:event_JbBuscarMouseClicked
 
+    /*
+     * Maneja el evento de clic del botón de solicitar préstamo.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbSolicitarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseClicked
-        // TODO add your handling code here:
         solicitarPrestamo();
     }//GEN-LAST:event_JbSolicitarMouseClicked
 
+    /*
+     * Maneja el evento de clic del botón de devolver libro.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbDevolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseClicked
-        // TODO add your handling code here:
         devolverLibro();
     }//GEN-LAST:event_JbDevolverMouseClicked
 
+    /*
+     * Maneja el evento de clic del botón de volver atrás.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbVolverMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseClicked
-        // TODO add your handling code here:
+        // Cierra la pantalla actual y abre la pantalla de inicio de sesión 
         Login secScreen = new Login();
         secScreen.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_JbVolverMouseClicked
 
+    /*
+     * Maneja el evento cuando el mouse entra en el área del botón de volver atrás.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbVolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseEntered
-        // TODO add your handling code here:
+        // Cambia el icono del botón al estado "presionado"
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver_pressed.png");
         JbVolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbVolverMouseEntered
 
+    /*
+     * Maneja el evento cuando el mouse sale del área del botón de volver atrás.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbVolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbVolverMouseExited
-        // TODO add your handling code here:
+        // Restaura el icono del botón al estado normal
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_volver.png");
         JbVolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbVolverMouseExited
 
+    /*
+     * Maneja el evento cuando el mouse entra en el área del botón de búsqueda.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseEntered
-        // TODO add your handling code here:
+        // Cambia el icono del botón al estado "presionado"
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_buscar_pressed.png");
         JbBuscar.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbBuscarMouseEntered
 
+    /*
+     * Maneja el evento cuando el mouse sale del área del botón de búsqueda.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbBuscarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbBuscarMouseExited
-        // TODO add your handling code here:
+        // Restaura el icono del botón al estado normal
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_buscar.png");
         JbBuscar.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbBuscarMouseExited
 
+    /*
+     * Maneja el evento cuando el mouse entra en el área del botón de solicitar préstamo.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbSolicitarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseEntered
-        // TODO add your handling code here:
+        // Cambia el icono del botón al estado "presionado"
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_solicitar_pressed.png");
         JbSolicitar.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbSolicitarMouseEntered
 
+    /*
+     * Maneja el evento cuando el mouse sale del área del botón de solicitar préstamo.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbSolicitarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbSolicitarMouseExited
-        // TODO add your handling code here:
+        // Restaura el icono del botón al estado normal
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_solicitar.png");
         JbSolicitar.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbSolicitarMouseExited
 
+    /*
+     * Maneja el evento cuando el mouse entra en el área del botón de devolver libro.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbDevolverMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseEntered
-        // TODO add your handling code here:
+        // Cambia el icono del botón al estado "presionado"
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver_pressed.png");
         JbDevolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbDevolverMouseEntered
 
+    /*
+     * Maneja el evento cuando el mouse sale del área del botón de devolver libro.
+     * @param evt Evento del mouse que desencadenó esta acción
+     */
     private void JbDevolverMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbDevolverMouseExited
-        // TODO add your handling code here:
+        // Restaura el icono del botón al estado normal
         ImageIcon estatoDosRe = new ImageIcon("src\\libreria\\municipal\\btn_devolver.png");
         JbDevolver.setIcon(estatoDosRe);
     }//GEN-LAST:event_JbDevolverMouseExited
 
+    /*
+     * Llena la tabla de libros con la lista proporcionada.
+     * @param libros Lista de libros que se mostrarán en la tabla
+     */
     private void llenarTabla(List<Libro> libros) {
         mt = (DefaultTableModel) jTable1.getModel();
         mt.setRowCount(0);
@@ -369,6 +418,9 @@ public class Home extends javax.swing.JFrame {
         }
     }
 
+    /*
+     * Llena el combo box de categorías con las categorías disponibles.
+     */
     private void llenarCategorias() {
         Set<String> categorias = obtenerCategorias();
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -379,6 +431,10 @@ public class Home extends javax.swing.JFrame {
         JcbCategoria.setModel(model);
     }
     
+    /*
+     * Obtiene todas las categorías distintas de los libros almacenados en la base de datos.
+     * @return Conjunto de cadenas que representan las categorías disponibles
+     */
     private Set<String> obtenerCategorias() {
         Set<String> categorias = new HashSet<>();
         String query = "SELECT DISTINCT categoria FROM libros";
@@ -394,6 +450,9 @@ public class Home extends javax.swing.JFrame {
         return categorias;
     }
 
+    /*
+     * Realiza la solicitud de préstamo de un libro seleccionado por el usuario.
+     */
     private void solicitarPrestamo() {
         if (usuarioLogueado == null) {
             JOptionPane.showMessageDialog(this, "Debe estar logueado para solicitar un préstamo", "Error", JOptionPane.ERROR_MESSAGE);
@@ -406,22 +465,27 @@ public class Home extends javax.swing.JFrame {
             return;
         }
 
+        // Obtener información del libro seleccionado
         String codigoLibro = (String) jTable1.getValueAt(selectedRow, 0);
         String estadoLibro = (String) jTable1.getValueAt(selectedRow, 2);
 
+        // Verificar el estado del libro seleccionado
         if ("Prestado".equalsIgnoreCase(estadoLibro) || "Pendiente".equalsIgnoreCase(estadoLibro)) {
             JOptionPane.showMessageDialog(this, "El libro seleccionado ya está prestado o en espera de aprobación", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Consultas preparadas para insertar el préstamo y actualizar el estado del libro
         String insertPrestamo = "INSERT INTO prestamos (dni_usuario, codigo_libro, fecha_prestamo, fecha_devolucion, estado) VALUES (?, ?, ?, ?, ?)";
         String updateLibro = "UPDATE libros SET estado = ? WHERE codigo = ?";
 
         try (PreparedStatement psPrestamo = connection.prepareStatement(insertPrestamo);
              PreparedStatement psLibro = connection.prepareStatement(updateLibro)) {
             
+            // Iniciar transacción
             connection.setAutoCommit(false);
             
+            // Insertar préstamo en la tabla prestamos
             psPrestamo.setString(1, usuarioLogueado.getDni());
             psPrestamo.setString(2, codigoLibro);
             psPrestamo.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
@@ -429,14 +493,18 @@ public class Home extends javax.swing.JFrame {
             psPrestamo.setString(5, "Pendiente");
             psPrestamo.executeUpdate();
 
+            // Actualizar estado del libro en la tabla libros
             psLibro.setString(1, "Pendiente");
             psLibro.setString(2, codigoLibro);
             psLibro.executeUpdate();
 
+            // Confirmar la transacción
             connection.commit();
             
+            // Mostrar mensaje de éxito
             JOptionPane.showMessageDialog(this, "Solicitud de préstamo realizada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
+            // En caso de error, realizar rollback y manejar excepción
             try {
                 connection.rollback();
             } catch (SQLException ex) {
@@ -444,6 +512,7 @@ public class Home extends javax.swing.JFrame {
             }
             e.printStackTrace();
         } finally {
+            // Restaurar el modo de autocommit al finalizar
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
@@ -451,10 +520,14 @@ public class Home extends javax.swing.JFrame {
             }
         }
 
+        // Actualizar la tabla de libros y mostrar los préstamos solicitados
         llenarTabla(obtenerLibros());
         mostrarLibrosSolicitados();
     }
 
+    /*
+     * Muestra los libros solicitados por el usuario logueado en una tabla.
+     */
     private void mostrarLibrosSolicitados() {
         modeloSolicitudes = new DefaultTableModel(
             new Object[][] {},
@@ -469,6 +542,7 @@ public class Home extends javax.swing.JFrame {
         };
         JtaMostrarSolicitudes.setModel(modeloSolicitudes);
 
+        // Obtener y mostrar los préstamos del usuario logueado
         List<Prestamo> prestamos = obtenerPrestamos(usuarioLogueado.getDni());
         for (Prestamo prestamo : prestamos) {
             String codigoLibro = prestamo.getCodigoLibro();
@@ -480,6 +554,11 @@ public class Home extends javax.swing.JFrame {
         }
     }
     
+    /*
+     * Busca libros por una categoría específica en la base de datos.
+     * @param categoria Categoría por la cual buscar libros
+     * @return Lista de libros encontrados
+     */
     private List<Libro> buscarPorCategoria(String categoria) {
         List<Libro> libros = new ArrayList<>();
         String query = "SELECT * FROM libros WHERE categoria = ?";
@@ -505,6 +584,11 @@ public class Home extends javax.swing.JFrame {
         return libros;
     }
     
+    /*
+     * Obtiene la lista de préstamos realizados por un usuario específico.
+     * @param dniUsuario DNI del usuario para el cual obtener los préstamos
+     * @return Lista de préstamos realizados por el usuario
+     */
     private List<Prestamo> obtenerPrestamos(String dniUsuario) {
         List<Prestamo> prestamos = new ArrayList<>();
         String query = "SELECT * FROM prestamos WHERE dni_usuario = ?";
@@ -530,6 +614,11 @@ public class Home extends javax.swing.JFrame {
         return prestamos;
     }
 
+    /*
+     * Obtiene el título de un libro específico a partir de su código.
+     * @param codigoLibro Código del libro del cual obtener el título
+     * @return Título del libro encontrado o "Título no encontrado" si no se encuentra
+     */
     private String obtenerTituloLibroPorCodigo(String codigoLibro) {
         for (Libro libro : obtenerLibros()) {
             if (libro.getCodigo().equals(codigoLibro)) {
@@ -539,12 +628,17 @@ public class Home extends javax.swing.JFrame {
         return "Título no encontrado";
     }
     
+    /*
+     * Obtiene todos los libros disponibles en la base de datos.
+     * @return Lista de libros disponibles
+     */
     private List<Libro> obtenerLibros() {
         List<Libro> libros = new ArrayList<>();
         String query = "SELECT * FROM libros";
 
         try (PreparedStatement ps = connection.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
+            // Crear un objeto Libro a partir de los datos de la base de datos
             while (rs.next()) {
                 Libro libro = new Libro(
                     rs.getString("codigo"),
@@ -562,6 +656,9 @@ public class Home extends javax.swing.JFrame {
         return libros;
     }
 
+    /*
+     * Realiza la devolución de un libro previamente prestado por el usuario logueado.
+     */
     private void devolverLibro() {
         if (usuarioLogueado == null) {
             JOptionPane.showMessageDialog(this, "Debe estar logueado para devolver un libro", "Error", JOptionPane.ERROR_MESSAGE);
@@ -577,31 +674,39 @@ public class Home extends javax.swing.JFrame {
         String codigoLibro = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 0);
         String estadoPrestamo = (String) JtaMostrarSolicitudes.getValueAt(selectedRow, 4);
 
+        // Verificar que el libro esté en estado "Prestado"
         if (!"Prestado".equalsIgnoreCase(estadoPrestamo)) {
             JOptionPane.showMessageDialog(this, "El libro seleccionado no está en estado 'Prestado'", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Consultas preparadas para eliminar el préstamo y actualizar el estado del libro
         String deletePrestamo = "DELETE FROM prestamos WHERE dni_usuario = ? AND codigo_libro = ?";
         String updateLibro = "UPDATE libros SET estado = ? WHERE codigo = ?";
 
         try (PreparedStatement psPrestamo = connection.prepareStatement(deletePrestamo);
              PreparedStatement psLibro = connection.prepareStatement(updateLibro)) {
             
+            // Iniciar transacción
             connection.setAutoCommit(false);
             
+            // Eliminar el préstamo de la tabla prestamos
             psPrestamo.setString(1, usuarioLogueado.getDni());
             psPrestamo.setString(2, codigoLibro);
             psPrestamo.executeUpdate();
 
+            // Actualizar estado del libro en la tabla libros a "Disponible"
             psLibro.setString(1, "Disponible");
             psLibro.setString(2, codigoLibro);
             psLibro.executeUpdate();
 
+            // Confirmar la transacción
             connection.commit();
 
+            // Mostrar mensaje de éxito
             JOptionPane.showMessageDialog(this, "Libro devuelto con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (SQLException e) {
+            // En caso de error, realizar rollback y manejar excepción
             try {
                 connection.rollback();
             } catch (SQLException ex) {
@@ -609,6 +714,7 @@ public class Home extends javax.swing.JFrame {
             }
             e.printStackTrace();
         } finally {
+            // Restaurar el modo de autocommit al finalizar
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
@@ -616,6 +722,7 @@ public class Home extends javax.swing.JFrame {
             }
         }
 
+        // Actualizar la tabla de libros y mostrar los libros solicitados
         llenarTabla(obtenerLibros());
         mostrarLibrosSolicitados();
     }  
@@ -624,30 +731,8 @@ public class Home extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
+        /* Crear y mostrar la interfaz de usuario */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);

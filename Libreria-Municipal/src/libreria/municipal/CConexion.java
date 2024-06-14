@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
 
+/*
+ * Clase CConexion para gestionar la conexión a la base de datos PostgreSQL.
+ */
 public class CConexion {
     Connection conectar = null;
     String usuario = "postgres";
@@ -14,6 +17,11 @@ public class CConexion {
     
     String cadena = "jdbc:postgresql://"+ip+":"+puerto+"/"+bd;
     
+    /*
+     * Método para establecer la conexión con la base de datos.
+     *
+     * @return Un objeto Connection si la conexión es exitosa, de lo contrario, null.
+     */
     public Connection conectar(){
      
         try{

@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- *
- * @author USUARIO
+/*
+ * Clase Usuario que representa a un usuario en el sistema.
+ * Proporciona métodos para registrar, buscar y validar usuarios.
  */
 public class Usuario {
 
@@ -28,6 +28,14 @@ public class Usuario {
         // No añadimos administradores predeterminados aquí, se cargan desde la base de datos
     }
 
+    /*
+     * Constructor de la clase Usuario.
+     *
+     * @param dni        El DNI del usuario.
+     * @param nombre     El nombre del usuario.
+     * @param correo     El correo electrónico del usuario.
+     * @param contraseña La contraseña del usuario.
+     */
     public Usuario(String dni, String nombre, String correo, String contraseña) {
         this.dni = dni;
         this.nombre = nombre;
@@ -52,6 +60,15 @@ public class Usuario {
         return dni;
     }
 
+    /*
+     * Registra un nuevo usuario en la base de datos.
+     *
+     * @param dni        El DNI del usuario.
+     * @param nombre     El nombre del usuario.
+     * @param correo     El correo electrónico del usuario.
+     * @param contraseña La contraseña del usuario.
+     * @return true si el usuario se registra correctamente, false si el usuario, correo o DNI ya están registrados.
+     */
     public static boolean registrarUsuario(String dni, String nombre, String correo, String contraseña) {
         if (buscarUsuarioPorNombre(nombre) != null || buscarUsuarioPorCorreo(correo) != null || buscarUsuarioPorDni(dni) != null) {
             return false; // Usuario, correo o DNI ya registrados
@@ -72,6 +89,12 @@ public class Usuario {
         }
     }
 
+    /*
+     * Busca un usuario por su correo electrónico en la base de datos.
+     *
+     * @param correo El correo electrónico del usuario a buscar.
+     * @return Un objeto Usuario si se encuentra un usuario con el correo especificado, de lo contrario, retorna null.
+     */
     public static Usuario buscarUsuarioPorCorreo(String correo) {
         try (Connection con = new CConexion().conectar()) {
             String sql = "SELECT * FROM usuarios WHERE correo = ?";
@@ -89,7 +112,12 @@ public class Usuario {
         return null;
     }
 
-
+    /*
+     * Busca un usuario por su DNI en la base de datos.
+     *
+     * @param dni El DNI del usuario a buscar.
+     * @return Un objeto Usuario si se encuentra un usuario con el DNI especificado, de lo contrario, retorna null.
+     */
     public static Usuario buscarUsuarioPorDni(String dni) {
         Usuario usuario = null;
         String sql = "SELECT * FROM usuarios WHERE dni = ?";
@@ -116,6 +144,14 @@ public class Usuario {
         return usuario;
     }
 
+    /*
+     * Valida un usuario basado en su nombre y contraseña.
+     * Compara la contraseña proporcionada con el hash almacenado en la base de datos.
+     *
+     * @param nombre      El nombre del usuario.
+     * @param contraseña  La contraseña proporcionada para validar.
+     * @return Un objeto Usuario si las credenciales son correctas, de lo contrario, retorna null.
+     */
     public static Usuario validarUsuario(String nombre, String contraseña) {
         Usuario usuario = buscarUsuarioPorNombre(nombre);
         if (usuario != null && BCrypt.checkpw(contraseña, usuario.getContraseña())) {
@@ -124,6 +160,11 @@ public class Usuario {
         return null;
     }
 
+     /*
+     * Obtiene una lista de todos los usuarios registrados en la base de datos.
+     *
+     * @return Una lista de objetos Usuario.
+     */
     public static List<Usuario> getUsuariosRegistrados() {
         List<Usuario> usuarios = new ArrayList<>();
         try (Connection con = new CConexion().conectar()) {
@@ -140,6 +181,12 @@ public class Usuario {
         return usuarios;
     }
     
+    /*
+     * Busca un usuario por su nombre en la base de datos.
+     *
+     * @param nombre El nombre del usuario a buscar.
+     * @return Un objeto Usuario si se encuentra un usuario con el nombre especificado, de lo contrario, retorna null.
+     */
     public static Usuario buscarUsuarioPorNombre(String nombre) {
         String sql = "SELECT * FROM usuarios WHERE nombre = ?";
 
