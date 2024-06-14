@@ -13,7 +13,9 @@ Pasos para ejecutar nuestro software
 
 paso 1. Descargar NetBeans desde el siguiente enlace https://dlcdn.apache.org/netbeans/netbeans-installers/22/Apache-NetBeans-22-bin-windows-x64.exe
 este enlace descarga el instalador de NetBeans para Windows de 64 bits. Después de descargar el archivo se debe ejecutar y continuar los pasos básicos de instalación.
+
 Paso 2. Descargar PostgreSQL desde el siguiente enlace https://sbp.enterprisedb.com/getfile.jsp?fileid=1259105 este descargara el instalador de postgresql para Windows de 64 bits, se debe continuar con los pasos de instalación, en esta instalación en un paso se pedirá una contraseña, es muy importante que no olvide esta contraseña para poder ingresar a la información de sus bases de datos.
+
 Paso 3. Una vez instalado estos dos programas, se debe abrir el gestor de BD de postgresql llamado PGadmin4. El cual solicitará la contraseña mencionada en el paso anterior, posterior a esto se creará la base de datos, en el menú de PGadmin4.
 
 Paso 4.  Primero debe dar clic derecho al icono de databases en la parte izquierda, esto desplegará un menú de opciones el cual contiene un ítem llamado créate database. Presione esta opción y se abrirá una ventana en la cual se le asignará un nombre a la base de datos, el cual debe ser bibliotecaMunicipal-DB. Después de esto presione el botón en la parte inferior derecha de la ventana SAVE.
